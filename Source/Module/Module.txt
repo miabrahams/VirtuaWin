@@ -1,0 +1,80 @@
+---- VirtuaWin Module Mini-Manual ----
+
+A VirtuaWin module consists of an ordinary windows executable that
+communicates with VirtuaWin by message passing. 
+
+The header file "Messages.h" defines all possible messages that can be sent to
+and from VirtuaWin. A module that shall be loaded by VirtuaWin must be placed
+in the "modules" directory in the VirtuaWin directory. 
+
+VirtuaWin uses PostMessage() for sending info to the modules, except from
+sending the WM_COPYDATA. In this way the dependency between modules and
+VirtuaWin is as small as possible and a crashed module should not affect
+VirtuaWin.
+
+The class name of the module MUST be the same as the filename including the
+.exe extension since VirtuaWin uses this for locating the handle of the
+module. Do not call the module something like explorer.exe, since you might
+end up with VirtuaWin trying to load the windows shell as a module, be a
+little more origninal :)
+
+VirtuaWin will send a MOD_INIT upon startup with its handle as wParam, which
+can be used for communication with VirtuaWin.
+
+All modules shall handle the MOD_QUIT message since VirtuaWin uses this for
+shutting down the module. 
+
+The MOD_SETUP is optional if you want to show a configuration dialog from your
+module.
+
+If the module needs the window list that VirtuaWin keeps window status in,
+VW_WINLIST is sent. VirtuaWin will the reply with WM_COPYDATA (see win32
+documentation). VirtuaWin holds this data in a fixed structure array of type
+windowType, the list is upto MAXWIN Long. The C definition for this is as
+follows:
+
+----------------------------
+#define MAXWIN 128                // max number of windows to handle
+#define MAXDESK 11                // max number of desktops (0 - not used, 1 - 9 - normal, 10 private) 
+typedef struct { // Holds the windows in the list
+    HWND           Handle;
+    HWND           Owner;
+    long           Style;
+    long           ExStyle;
+    unsigned long  ZOrder[MAXDESK] ;
+    unsigned short Desk;
+    unsigned short menuId ;
+    unsigned char  Sticky;
+    unsigned char  Tricky;
+    unsigned char  Visible;
+    unsigned char  State;
+} windowType;
+----------------------------
+
+The following is an example of processing the WM_COPYDATA message:
+
+----------------------------
+    // definitions
+    windowType winList[MAXWIN];  
+    int nOfWin;
+    // ...
+    switch(msg)
+    {
+    // ...
+    case WM_COPYDATA: 
+        {
+            // The data should be considered read-only and _must_ be copied to 
+            // local buffer if to be used after the message is processed
+            COPYDATASTRUCT* pcds = (COPYDATASTRUCT*)lParam;
+            const windowType* winP = (const windowType*)pcds->lpData; // Window list
+            DWORD len = pcds->cbData;   // Size of data
+            nOfWin = pcds->dwData;      // number of windows in the window list
+            memcpy(winList, winP, len); // copy the data to local buffer, if to be used later
+            break;
+        }
+----------------------------
+
+Check example files for additional info on how to use and handle the different
+messages and mail any requests or questions to the SourceForge Questions forum
+or to VirtuaWin@home.se
+

@@ -1,0 +1,19 @@
+#include <windows.h>
+#include "winlistres.h"
+
+
+IDD_MAINDIALOG DIALOG 79, 25, 377, 226
+STYLE DS_MODALFRAME | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+CAPTION "WinList v4.4"
+FONT 8, "Helv"
+BEGIN
+    LTEXT           "Use this module to restore windows that might have been lost. Mark the window that you want to restore and press the Restore button. Press Undo if you accidently restored the wrong window.", 
+                    102, 6, 6, 364, 21
+    CONTROL         "WList",ID_WINLIST,"SysListView32",LVS_REPORT | LVS_SINGLESEL | WS_BORDER | WS_TABSTOP,
+                               6, 31, 365, 169, WS_EX_CLIENTEDGE
+    DEFPUSHBUTTON   "Done",    IDCANCEL,  305, 206, 40, 14
+    PUSHBUTTON      "Refresh", IDREFRESH, 129, 206, 40, 14
+    PUSHBUTTON      "Restore", IDOK,      173, 206, 40, 14
+    PUSHBUTTON      "Undo",    IDUNDO,    217, 206, 40, 14
+    PUSHBUTTON      "Save",    IDSAVE,    261, 206, 40, 14
+END

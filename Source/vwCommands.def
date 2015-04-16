@@ -1,0 +1,67 @@
+/*
+ *  VirtuaWin - Virtual Desktop Manager (virtuawin.sourceforge.net)
+ *  vwCommands.def - List of hotkey commands.
+ * 
+ *  Copyright (c) 2007-2012 VirtuaWin (VirtuaWin@home.se)
+ * 
+ *  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
+ *  USA.
+ */
+
+VW_COMMAND (vwCMD_NAV_MOVE_LEFT,      1, 0, "NAV: Move left")
+VW_COMMAND (vwCMD_NAV_MOVE_RIGHT,     2, 0, "NAV: Move right")
+VW_COMMAND (vwCMD_NAV_MOVE_UP,        3, 0, "NAV: Move up")
+VW_COMMAND (vwCMD_NAV_MOVE_DOWN,      4, 0, "NAV: Move down")
+VW_COMMAND (vwCMD_NAV_MOVE_NEXT,      6, 0, "NAV: Move to next")
+VW_COMMAND (vwCMD_NAV_MOVE_PREV,      5, 0, "NAV: Move to previous")
+VW_COMMAND (vwCMD_NAV_MOVE_DESKTOP,   7, 1, "NAV: Move to desktop #")
+VW_COMMAND (vwCMD_NAV_MOVE_LAST,     39, 0, "NAV: Return to last desktop")
+VW_COMMAND (vwCMD_WIN_STICKY,         8, 2, "WIN: Toggle always show")
+VW_COMMAND (vwCMD_WIN_ALWAYSONTOP,   25, 2, "WIN: Always on top")
+VW_COMMAND (vwCMD_WIN_BRINGTOTOP,    42, 4, "WIN: Bring to top")
+VW_COMMAND (vwCMD_WIN_PUSHTOBOTTOM,  24, 2, "WIN: Push to bottom")
+VW_COMMAND (vwCMD_WIN_DISMISS,        9, 2, "WIN: Dismiss window")
+VW_COMMAND (vwCMD_WIN_GATHER,        29, 2, "WIN: Gather process windows")
+VW_COMMAND (vwCMD_WIN_MOVE_LEFT,     30, 2, "WIN: Move left")
+VW_COMMAND (vwCMD_WIN_MOVE_RIGHT,    32, 2, "WIN: Move right")
+VW_COMMAND (vwCMD_WIN_MOVE_UP,       34, 2, "WIN: Move up")
+VW_COMMAND (vwCMD_WIN_MOVE_DOWN,     36, 2, "WIN: Move down")
+VW_COMMAND (vwCMD_WIN_MOVE_NEXT,     14, 2, "WIN: Move to next desktop")
+VW_COMMAND (vwCMD_WIN_MOVE_PREV,     12, 2, "WIN: Move to previous desktop")
+VW_COMMAND (vwCMD_WIN_MOVE_DESKTOP,  10, 3, "WIN: Move to desktop #")
+VW_COMMAND (vwCMD_WIN_MOVE_LEFT_FOL, 31, 2, "WIN: Move left and follow")
+VW_COMMAND (vwCMD_WIN_MOVE_RIGHT_FOL,33, 2, "WIN: Move right and follow")
+VW_COMMAND (vwCMD_WIN_MOVE_UP_FOL,   35, 2, "WIN: Move up and follow")
+VW_COMMAND (vwCMD_WIN_MOVE_DOWN_FOL, 37, 2, "WIN: Move down and follow")
+VW_COMMAND (vwCMD_WIN_MOVE_NEXT_FOL, 15, 2, "WIN: Move to next desktop and follow")
+VW_COMMAND (vwCMD_WIN_MOVE_PREV_FOL, 13, 2, "WIN: Move to prev desktop and follow")
+VW_COMMAND (vwCMD_WIN_MOVE_DESK_FOL, 11, 3, "WIN: Move to desktop # and follow")
+VW_COMMAND (vwCMD_WIN_GATHER_ALL,    26, 0, "WIN: Gather all windows")
+VW_COMMAND (vwCMD_WIN_REAPPLY_RULES, 46, 0, "WIN: Reapply window rules")
+VW_COMMAND (vwCMD_UI_CTLMENU_STD,    43, 0, "UI: Open standard control menu")
+VW_COMMAND (vwCMD_UI_CTLMENU_CMP,    28, 0, "UI: Open compact control menu")
+VW_COMMAND (vwCMD_UI_WINMENU_STD,    18, 0, "UI: Open standard window menu")
+VW_COMMAND (vwCMD_UI_WINMENU_CMP,    19, 0, "UI: Open compact window menu")
+VW_COMMAND (vwCMD_UI_WINLIST_STD,    20, 0, "UI: Open standard window list")
+VW_COMMAND (vwCMD_UI_WINLIST_CMP,    21, 0, "UI: Open compact window list")
+VW_COMMAND (vwCMD_UI_WINLIST_MRU,    22, 0, "UI: Open most recently used window list")
+VW_COMMAND (vwCMD_UI_WTYPE_SETUP,    27, 0, "UI: Open window rule setup")
+VW_COMMAND (vwCMD_UI_SETUP,          23, 0, "UI: Open VirtuaWin setup")
+VW_COMMAND (vwCMD_UI_ENABLESTATE,    38, 0, "UI: Toggle enable state")
+VW_COMMAND (vwCMD_UI_SYSTRAYICON,    40, 0, "UI: Toggle display of system tray icon")
+VW_COMMAND (vwCMD_UI_BOSS_KEY,       44, 0, "UI: Boss key")
+VW_COMMAND (vwCMD_UI_UNBOSS_KEY,     45, 0, "UI: Un-Boss key")
+VW_COMMAND (vwCMD_UI_EXIT,           41, 0, "UI: Exit VirtuaWin")
+VW_COMMAND (vwCMD_END,                0, 0, "Unsupported command")

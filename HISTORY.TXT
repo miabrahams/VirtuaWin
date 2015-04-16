@@ -1,0 +1,642 @@
+***   VirtuaWin Revision History   ***
+--------------------------------------
+
+Ver 4.4 2012/10/09
+
+* 3178720 Added dynamic taskbar support for Win7
+* 3082777 Implemented boss & unboss key
+* 3205756 Fixed activation of minimized window when not hiding them.
+* 3213525 Fixed title bar redraw issue caused by toggling TOOLWIN flag
+* 3310612 Implemented own FindWindow and improved module start-up reliability
+* 3242208 Changed action of Module Enable/Disable button to start module
+* 3060975 Improved code getting a window icon, getting icon from app first
+* 3364055 Updated hotkey list when setup is applied as changes may effect it
+* 3376539 Handled explorer exiting so middle mouse button still works
+* 3575279 Added message VW_INVERTY to return invert Up/Down setting
+* 3481678 Added Reapply window rules hotkey and module interface
+* 3304530 Added Automatically close window option to Window rule dialog
+* 3082788 Fixed problem with middle clicking on opera tabs opening VW menu
+* 3110164 Fixed problem with 'stickies' windows being automatically grouped
+
+
+
+----------------------------
+
+Ver 4.3 2010/09/04
+
+* 3058490 Fixed bug causing current window to be moved to the next desktop
+* 3017670 Added new module interface message to control desktop changing
+* 3026593 Updated external interface documentation
+* 3025763 Improved VW_FOREGDWIN message so that modules can force VW to give
+  focus to their unmanaged windows
+* 3025866 Improved VW_FOREGDWIN message to allow modules to get VW to choose
+  a suitable foreground window
+* 3026574 Fixed problem with hidden linked windows being made visible by VW
+* 3026907 Added manifest file to the source package
+* 3024305 Fixed minimised window activation issue when using new 'Only hide
+  taskbar button ...' option.
+* 3025759 Changed BltMode to HALFTONE (not Win9x) to improve image quality
+* 3014409 Improved initial deskop image by simulating the taskbar and adding
+  a boarder.
+* 3014411 Improved Window Rule's hide method option behaviour to avoid
+  invalid combinations
+* 3012041 Added documentation for hidden config options
+* 3012028 Fixed size of box around User Interface section in Setup
+
+
+
+----------------------------
+
+Ver 4.2 2010/06/04
+
+* 2980468 Added VW_CMENUITEM module message so modules can add items to the 
+  main control menu
+* 3011201 Restructured help topic tree to have fewer top level items.
+* 2976228 Allowed up to 5sec for VW to detect taskbar before complaining
+* 2980490 Added direct desktop change options to control menu and created
+  compact & standard versions with hotkey & mouse options.
+* 2976533 Fixed loss of minimized window thumbnail on Win7, added "Only hide 
+  taskbar button ..." expert option to disable it in case of side effects
+* 2918536 Reduced outlook lockups by modifying set foreground window algorithm
+* 2978143 Fixed Minimize hide method issue on Windows 7
+* 2979653 Brought back "Hide minimized windows on desktop change" expert opt
+* 2979675 Added "Make windows of this type always on top" option in Win rules
+* 2979883 Added VW_HOTKEY module message so modules can execute hotkey cmds
+* 2912583 Added "Only change when dragging a window" mouse option.
+* 2979884 Added "WIN: Bring to the top" hotkey command
+* 2979817 Added "Operate on window under mouse" hotkey option
+* 2122513 Added 64bit OS support for dynamic toolbar and added error message
+  documenting dynamic toolbar is not supported on Win7
+* 2905598 Added WIN as a mouse modifier (submitted patch)
+* 2959463 Implemented clicking on window list desk names to change desktop
+* 2950454 Added hidden option lastDeskNoDelay to disable the 1sec delay before
+  updating last desktop, used by "NAV: Return to last desktop" command
+* Improved module IMAGE message so that 6 & 7 return the desktop size and
+  8 toggles auto image create state (so a module can temporarily  disable it)
+* 2969735 Support Win Rule Window Name to be '<None>' to mean no name.
+* 2901801 UAC support - recognise elevated windows and not class them as hung
+* 2902879 Handle failue to call EnumWindows better.
+* 2901797 Fixed Window Menu -> Info feature for an elevated window.
+* 2901729 Fixed start-up issues on windows 7
+* 2892755 Fixed *<NAME>* win rule matching.
+
+
+----------------------------
+
+Ver 4.1 2009/09/09
+
+* Improved the windows help file, now has index and search enabled.
+* 2727927 Extended middle mouse button desktop change & open winlist to
+  include the taskbar
+* 2854161 Added a hidden 'start desktop' config option (.cfg file must be
+  hand edited)
+* 2797845 Improved return to last desktop command to support a rapid switch  
+* 2682854 Added XP theme support for setup dialog and fixed several rc issues
+* 2448910 Added option to install for current user or for all users
+* 2789338 Improved error messages in case of corrupt or zero byte config file
+* 2134867 Added "Force release of modifier keys on desktop change" option
+* 2189263 Added improved init and system setup logging and added potential fix
+* 2306168 Fixed setting of last active window when only preserving the Z-order
+* 1842145 Implemented global system hook to detect window activations -
+  new config expert setting
+* 1971856 Added option to open menus at fix locations when hotkey is used
+  and improved the location of the dialog - central in the primary monitor
+* 1983857 Added copyright confirmation notice to icon submission.
+* 1942881 Fixed Z-Order of windows assigned immediately to another desktop.
+* 2036553 2036555 Implemented systray icon toggle and exit hotkey commands.
+* 2089761 Increased the max number of hotkeys to 80
+* 1869917 Added new dynamic taskbar order feature to support Taskbar shuffle.
+* Added dynamic taskbar button removal option as a better fix to long
+  standing issue.
+* 1979116 Re-implement taskbar activation option to be a window rule option.
+* 1964565 Added crash handler and reimplemented showHelp to avoid rare crash
+* 1967494 Close spawned module process handles.
+* 1919024 Implemented NAV: Return to last desktop hotkey command.
+* 1933182 Improved SetForegroundWindow so focus can be given back to desktop.
+* 1930005 Force redraw of activated window hidden using toolwin flag.
+* 1953231 Fixed handling of close message so it does exit VW if requested.
+* 1950577 Made process name string comparisons case insensitive.
+* 1956478 Added portable unicode package creation
+
+----------------------------
+
+Ver 4.0.1 2008/04/24
+
+* 1924256 Moved the on-line help over to MS HTML help (chm).
+* 1938548 Fixed systray icon tooltip when VW is disabled.
+* 1936226 Up-dated Setup About copyright to 2008
+* 1926893 Fixed ignore activation event flashing all linked windows.
+* 1930012 Fixed hidden explorer activation issue.
+* 1928095 Added WM_CLOSE message handler prompting user if they want VW to
+  exit
+* 1926902 Fixed link window logic bug in window list menu.
+* 1923412 Added hotkeys for moving windows Left right up down and added enable
+  toggle hotkey command.
+* 1917996 Fixed hiding of FeedReader when maximized
+* 1915723 Documented retirement of VW_WINLIST module message
+* 1919023 Changed compact window list column cycling so all columns can be
+  accessed
+* 1921289 Changed the location of hidden VW window to avoid problem with
+  Multimon
+* 1926160 Stored flag for forced unmanaged windows and made its children
+  unmanaged.
+* 1926899 Added new VW_WINMANAGE module message to allow modules to force VW
+  to (not) manage a window
+* 1944158 1901457 Documented external interface & window list menus
+* Added default window rules for Excel & AdobeAcrobat to address their main
+  window taskbar button behaviour.
+
+
+----------------------------
+
+Ver 4.0 2008/03/13
+
+* Creation of a new Window Rule dialog to manage userlist.cfg, tricky.cfg,
+  sticky.cfg & assignment.cfg via a UI - no more hacking!
+* 1819203 1810156 Window type identification can now be any combination of
+  class, window or program name.
+* 1798648 1796170 1627782 Changed window management to store some info about
+  all non-child  windows, allows VirtuaWin to not manage some window types and
+  to manage others.
+* Removed upper limit on the number of windows that VW can manage 
+* 1844268 Added window type option to keep a window's taskbar button visible.
+* 1843300 Rewritten main Setup hotkey configuration to allow many more
+  different hotkeys to be created.
+* 1820531 Added MRU window list menu as a hotkey binding
+* 1873636 Fixed exit deadlock issue
+* 1843056 1843056 Fixed VW & WinList taskbar detection issues.
+* 1840887 Fixed setup option change issues.
+* 1873639 Added program version info to the exe resource.
+* 1911706 Removed the need for admin privileges for installer.
+* 1906222 Added get modules button to setup dialog.
+* 1901183 Changed window flags and changed GETWINDESK to WINGETINFO with
+  enhanced functionality
+* 1873544 1897011 Added new 'Group App' window rule and Gather option in
+  window menu
+* 1873539 Added a Re-apply Rules option to Control menu
+* 1896828 1877997 Implemented new 'Main Window' window rule option
+* 1896830 Reimplemented main window hide/show function to improve performance
+  and fix minimize window hiding method
+* 1877491 1737872 Resolved long standing pop-up window event issues.
+* 1886979 Fixed flag problem which left windows being 'sticky'.
+* 1887127 Automatically change window-list menu to compact.
+
+
+----------------------------
+
+Ver 3.2 2007/11/08
+
+* Moved the main typedefs into defines.h so they are in the SDK.
+* 1824130 fixed vrituawin.cfg minor corruption.
+* 1816219 Increased module start-up time-out to 20 seconds.
+* 1800940 Allow a longer title string when compact menu is used.
+* 1796288 Added -msg  command line  argument so  virtuawin.exe  can be used to
+  send a message to the VW already running.
+* Fixed uninitialized variable which could lead to a bad icon draw request.
+* 1766390 Fixed several issues with taskbar buttons appearing
+* 1766352 Fixed mouse negative x position problem.
+* Fixed Setup's Window List menu Show item not enabling the Apply.
+* Added VW_DESKNAME & VW_DESKTOP_SIZE module messages.
+* 1741445 Changed the module messages which use a WM_COPYDATA message to reply
+  directly to the requesting module if the wParam is not 0 (assumed HWND).
+* 1618004 Allowed direct hotkey access to desktops  greater then the X*Y size,
+  creating 'hidden' desktops. Windows on these desktops are not listed etc.
+* Changed the term 'Copy' to 'Show' as this gives a more temporary feel.
+* 1479537 Added an optional 'Show' column to the Window List menu.
+* 1549392 Increased the maximum number of desktops to 20, simple define change
+  can increase this to 99 or more. Changed the systray icon tooltip to display
+  the desktop name as an icon may not be available (still only 9 built in).
+* Improvements to WinList, including sortable columns and Hung status column.
+* Improved the menus, adding 'Push to Bottom', 'Always on Top', 'Move to Next'
+  & Previous to the current window menu and greying out unavailable options.
+* Increased the number of windows manged to 160 after recent forum thread.
+* Added  window  names so the  systray  tooltip can be in  agreement  with any
+  desktop naming module used.
+* Changed the compact  window list menu to use  multi-columns  to support more
+  than 40+  windows,  clicking  on titles of  non-compact  menu  displays  all
+  content.
+* 1731298 Improved the  handling of newly opened owned windows  sanitizing any
+  initial desktop assignment
+* 1731312 Simplified VWAssigner to use simple module messages and improved the
+  handling of VW window assignment to respect the 'enable wrapping' setting.
+* 1723458 fixed window list menu not closing.
+* Fixed Setup changes being applied multiple times.
+* Changed module  enable/disable  list saving to be  consistently in the Setup
+  process.
+* Fixed quite a few violations of VW being  'disabled',  including the Removal
+  items that should not be available in the systray icon rb menu.
+* Fixed menu position  problem when mouse is at the top of the screen,  caused
+  by subtracting 2 off the position.
+* Forced the assignment of a new foreground  window when using the new current
+  window menu to assign the window to another desktop.
+
+
+----------------------------
+
+Ver 3.1 2007/05/18
+
+* 805556 - Added screen capture functionality, enabled via module interface.
+* 891589 - Added regex  support to most cfg files, now support cn:, cr:, wn: &
+  wr: lines.
+* 909401 - Changed the font used by setup dialog to avoid the problem.
+* 1090375 - Implemented new VW_ENABLE_STATE message.
+* 1221023 Implemented  VW_ASSESSWIN message to access a given window, required
+  by WinList.
+* 1314574 - Fixed taskbar order issue caused by sticky  windows and dragging a
+  window between desks.
+* 1329448 - Added new current  window menu opened via a hotkey or middle mouse
+  button on the title bar
+* 1358979,  1017407 -  Combined  'ignore  popups'  and  'move  popups'  into a
+  combined 'On hidden window activation' option with a new move to desk option
+  and made ignore really ignore.
+* 1412624 - Added code to  properly  identify  the  position  of the taskbar -
+  removed redundant 'taskbar warp' & 'XP themed bar' options.
+* 1439471 - Integrated unicode support patch, added new build -u option.
+* 1482377 - Added  option to open the window  list menu by middle  clicking on
+  the desktop and add a compact menu option.
+* 1589763 - Fixed a tricky window .Net & sub-dialog hide problem
+* 1595110,  1468842, 1338957, 942081, 798159 - Implemented  mouse desktop edge
+  knocking support and improved window dragging detection.
+* 1644675 - added support for UNC network user paths (i.e. \\<machine>\path\)
+* 1659736 - Changed display of disabled modules, now have a ' (disabled)'.
+* 1693125 - Removed  crash  recovery  as the moving of hidden  windows  caused
+  problems with maximised windows on multiple monitor systems.
+* 1716321 - Fixed  Always on top z-order  problem and  generally  improved the
+  z-ordering preservation.
+* Added an Explore  Config  button to setup to help people  locate their setup
+  files.
+* Added new dragging on desktop with middle mouse button to change desktop
+* Changed the default  location of the setup dialog to be near the top left of
+  the  primary  display  (i.e.  windows  default  location)  as a  centralized
+  position is a really bad place to choose for systems with 2 monitors.
+* Fixed a few double lockMutex issues.
+* Fixed a hide  problem  with Word's Find dialog  caused by its parent being a
+  hidden window
+* Fixed long standing winamp issue by changing the window handling criteria
+* Fixed potential crash and memory leak in window list menu generator
+* Identified  tricky windows  created by excel and adobe reader when more than
+  one  file is  opened  and made  them  owned by the main  window  to keep the
+  taskbar icons together
+* Implemented  VW_GETWINDESK message to return a given window's desk, required
+  by WinList.
+* Improve the look of the window list menu.
+* Improved VW_CHANGEDESK,  VW_ASSIGNWIN & VW_SETSTICKY module messages so they
+  can be directly used by a hotkey program.
+* Increased  MAXWIN to 128 and  changed  the way VW handles too many  windows,
+  ignores extra windows rather than disabling.
+* Made event  logging  part of the normal  build,  enabled via an Expert setup
+  option.
+* Several  improvements  to  WinList,  including  getting  a  windows  desk #,
+  multiple undo, and new Refresh & Save button 
+
+
+----------------------------
+
+Ver 3.0 2006/09/16
+* Implemented support of owned windows (fixes winamp and bug SF939132 etc)
+* Fixed issues caused by minimized windows with sub windows, fixes SF1457569.
+* Fixed VirtuaWin lock-up issues caused by hung Tricky windows.
+* SF874409, maintained list of hung windows and continue to attempt recovery -
+  windows will not be lost (tray icon continues to flash)
+* Re-implemented  crash  recovery  so that it does  not  have to write to disk
+  every minute (uses window  positioning),  removed  setup option as it is for
+  free. Better z-order storage so sticky windows are handled better.
+* Changed the initial start-up process to copy any installation cfg files into
+  the user area so the VW installation can have a 'recommended'  setup but the
+  user has access to all cfg files. Fixes SF1178901, SF950115 & SF1210922.
+* Changed  the  default  location  of the  user  config  files  to the  user's
+  'Application   data/VirtuaWin'  (uses   SHGetSpecialFolderLocation   as  its
+  supported on all OSs)
+* SF1435429,  added new  userpath.cfg  to set the  location of the user config
+  directory to support roaming profile.
+* Implemented  support for hidden  applications  popping up due to some event,
+  fixes  SF1017408  &  SF1358979.  Added new  options  'Pop-up  raised  hidden
+  windows' & 'Move  popped-up  hidden windows' to control this. Note that some
+  apps (like Opera) must be made Tricky windows to work correctly.
+* Implemented a Z-order preservation feature, fixes SF1008751 & SF1314574.
+* Improved the  reliability  of setting the  foreground  window (this function
+  failing is the biggest cause of 'odd' behaviour).
+* Fixed  SF1324555,  SF1004564 & SF807794,  bug in window  drag code makes the
+  window appear sticky.
+* SF1421175, added  alternative  fallback method in case the application  icon
+  cannot be retrieved with GetClassLong
+* SF1046367, changed setup to allow multiple modifiers.
+* Added MSVC v6 make files and build scripts for MINGW & cmd.
+* Found that a mutex was  released  twice, not sure about the  sideffects  but
+  could possibly cause a crash when displaying the window list
+* Bound  middle  mouse  button  click and shift  click on the taskbar  icon to
+  change  desktop,  also added Next and  Previous to the right button  context
+  menu.
+* Added new 'Move window immediately' option to Desktop State Handling.
+* Added support for  "class_name_*" in cfg files (e.g. tricky.cfg)  which will
+  match any window with a class name that starts with "class_name_"
+* Changed  Access  window menu list to contain all  windows, now this could be
+  used as an alternative to Windows Alt+Tab
+* Changed the Setup Dialog help to open the right page in the help docs.
+* Improved sdk VW_ASSIGNWIN mesage handling so VW will follow the window being
+  assigned  if the desktop  number is less than zero (i.e. if desk given is -2
+  the window is moved to desk 2 and VW changes to desk 2)
+* Added  a sdk  interface  to get  VirtuaWin's  installation  & user's  config
+  directory.
+----------------------------
+
+Ver 2.11 2005/10/13
+* Better multi-user support. Store config files in home directory
+* Removed the need for registry entry
+* SF1205908, periodic check that moved application doesn't reappear in the taskbar
+* Updated mousekeys functionality to require a motion tendency towards the edge 
+  of the screen to prevent the desktop from swapping unintentionally just 
+  because the mouse is near the end of the screen when the meta key is pressed
+* Fixed grammar error when recovering windows.  It now properly says 
+  "# windows were recovered" or "1 window was recovered"
+* Fixed a bug that was causing the right edge or bottom edge of the screen 
+  to be detected incorrectly when the secondary monitor was to the left of or 
+  above the primary monitor
+* Added SF fix 1296291 for alt+tab listing issue
+* Added patch 1295748, toggle sticky function was incorrectly implemented.
+* Added patch 1295745, this removes some duplicated code which is always nice
+* Removed popup alert message when configuring only one desktop
+* Made the setup dialog center itself on the primary monitor so that it worked 
+  on dual monitor systems.  Prior to this change it was centering itself on the 
+  centerline between the two monitors if the secondary monitor was to the left 
+  or under the primary monitor, and half way off of the edge of the displays 
+  if the secondary monitor was to the right or above the primary monitor.
+----------------------------
+
+Ver 2.10 2005/02/16
+* Changed compiler to gcc, maybe fixes some reported crashes?
+* SF904069 Added possibility to choose if sticky should be permanent for all instances 
+  of the same classname.
+* SF905625, Added module message for changing the sticky state of a window
+* SF936865, use virtual sceensize for mouse switching instead since multimonitor 
+  setups would switch desktop prematurely otherwise.
+* SF1053738, added application icons to the window list
+----------------------------
+
+Ver 2.9 2004/01/10
+* SF770859, Window menu heading will not be displayed if only one meny is used
+* Bugfix: When assigning a visible window to current desktop (by module message) the window was lost.
+* Bugfix: Some windows refused to be moved, such as MSN and AIM.
+----------------------------
+
+Ver 2.8 2003/07/10
+* Added possibility to disable the use of one config file for each user
+* Added module support for assigning a window to specified desktop 
+* Changed the mouse control checkboxes to radiobuttons.
+* Bugfix: (SF745820)Excluded some special types of windows from beeing handled by VirtuaWin.
+* Bugfix: Updated the webaddress link
+* Bugfix: (SF693876)Fixed option to handle XP skinned style taskbars 
+----------------------------
+
+Ver 2.7.1 2003/04/11
+* Bugfix: Accidently placed another option over the "switch minimized" option in the setup.
+----------------------------
+
+Ver 2.7 2003/04/09
+* Double click on the icon will bring up setup, and select "disable" instead for disabling.
+* Added config options to disable taskbar detection and the alternative hiding technique.
+* Bugfix: All windows was shown in the window menu if only one menu was used
+* Bugfix: Added retries to add the systray icon incase VirtuaWin starts up before 
+  the sytray process.
+* Added a new setup tab, "expert" and moved some settings from misc.
+* Bugfix: Old taskbar position was not deleted if taskbar position moved during operation. 
+  Also improved left/right/up/down taskbar position detection
+* Bugfix: The "tricky" windows was not moved away far enough from the screen so you could 
+  see a small grey bar at the screen bottom.
+* Bugfix: Changed the wait time for module startup timeout to 10 secs instead of 5 to avoid 
+  module errors during startup.
+----------------------------
+
+Ver 2.6.2 2002/10/01
+* Bugfix: Fixed a memory leak
+* Bugfix: Added mutex protection for the window list to increase robustness
+* Bugfix: Fixed so that the recovery file is written with correct endlines
+----------------------------
+
+Ver 2.6.1 2002/07/17 
+* Removed the MF_POPUP flag from the window menus since they shouldn't be created like this. 
+  Fixed by Ulf Jaenicke-Roesler.
+* Improved the window menus so that unnecessary menus and items won't show and they all 
+  have a label. Fixes by Ulf Jaencke-Roessler.
+* Fixed so that window coordinates are reloaded when resolution is changed, and also 
+  so that taskbar location is reloaded if moved.
+* Now we try to locate the MSTaskSwWClass even if it is a direct child of Shell_TrayWnd, 
+  this will make it work on more windows version and hopefully get rid of the startup error
+  some users have experienced.
+----------------------------
+
+Ver 2.6 2002/06/02 
+* Bugfix: Alternative way of hiding windows. This solves the disappearing 
+  Explorer bug
+* Bugfix: Saving of sticky state for "User windows" is now fixed
+* Bugfix: Problems with saving desktop and stickiness state of applications 
+  containing spaces in their classnames
+* Now the "Access menu key" works with all three menu types. Thanks to Christian Storm
+* Improved Window menu, no need to step through submenus. Thanks to Christian Storm
+* Sticky-toggle now works in combination with the win-key. Thanks to Christian Storm
+* Taskbar warp now works for all locations of the taskbar. Thanks to Philip Walford
+* Double click in the module list will bring up module config window (if any)
+* Option to hide the system tray icon
+* Trying to start-up a second VirtuaWin instance will bring up setup window
+* Classname will now always be "VirtuaWinMainClass" and not version dependent
+----------------------------
+
+Ver 2.5 2001/02/10
+* Bugfix: Too many modules would corrupt data and cause undefined behavior,
+  also increased the maximum number of modules handled from 5 to 10
+* Bugfix: Fixed a bug with the username lookup for config file, could go wrong sometimes
+* Bugfix: Fixed so that config update notification is sent upon apply and 
+  only when something has changed upon hitting ok
+* Bugfix: Fixed the sticky symbol in the winlist again, got lost during some changes
+* Bugfix: Fixed bug with needing to have hot keys enabled for menu keys to work and 
+  also better error message
+* The WinList module now has classname for all applications
+* Config file will also be written upon every apply and not if cancel is selected
+* Added module message for getting the current desktop number
+* Modules will now get a notification when desktop layout has changed since we 
+  might have a new current desktop number after a change
+* The question mark in the setup dialog is removed since it is no functionality for it
+----------------------------
+
+Ver 2.4 2000/08/19
+* Bugfix: Added the code again that removes closed windows, this will avoid having closed 
+  child windows reappearing again. This fix has the disadvantage of being able to remove 
+  valid windows when under heavy load, see next item for more info on a workaround
+* Added a module, WinList, in the installation package. This module has a list of all 
+  windows on the system and can restore any of them if VirtuaWin should loose them
+* Modifications by Matti Jagula <matti@proekspert.ee> List of modifications follows: 
+  Added window title sorting in popup menus (Assign, Direct, Sticky) Added some controls 
+  to Setup Misc tab and support for calling the popup menus from keyboard
+* Modifications by Alasdair McCaig. Added multiple user setup support. There will now be 
+  one config file for each user
+----------------------------
+
+Ver 2.3 2000/06/08
+* The system tray icon will be reinstalled if Windows shell is restarted (only with IE4.0 or higher)
+* The "switch minimized" option is checked by default (too many questions about why
+  not minimized windows where moved)
+* Top sticky window will become active if no other active candidate when moving to another desktop
+* Bugfix: VirtuaWin could loose windows under heavy load. This should have been fixed now
+* Bugfix: Windows can not be assigned to an unavailable desktop (when using desktop assignment)
+----------------------------
+
+Ver 2.2.1 2000/03/21 
+* Bugfix: Mouse support did not work on win98
+----------------------------
+
+Ver 2.2 2000/03/19 
+* Added two hotkeys for cycling desktop-number up and down.
+* Removed the mousedll. Mouse handling works a little bit different now. This has solved 
+  several problems and the only real drawback is that it is not possible to have 0 mouse delay
+  anymore, current minimum is 50. Most fixes below come from this mouse change.
+* Mouse functionality is totaly disabled when not used. This means that it consumes no CPU time for
+  users that disables mouse support.
+* Possible to set mouse delay in 50ms precision. 
+* Bugfix: Not possible to switch away screensaver locks anymore.
+* Bugfix: No unistall problem due to mousedll.dll
+* Bugfix: When switching desk with mouse sometimes caused several undesired switches.
+* Bugfix: ':' is used as comment character in userlist.cfg instead since some classnames 
+  started with '#'.
+* Bugfix: Changed display order so that window order should not be moved in the taskbar
+* Bugfix: No switching to the same desktop, this will take away any flicker if hotkey 
+  to current desk is pressed.
+* Bugfix: No warning message if desktopsize isn't really changed in number of desktops.
+* Bugfix: Minor change with hotkey routine, might fix some strange hotkey problems.
+----------------------------
+
+Ver 2.1.1 2000/02/23 
+* Bugfix: The window menus "access" and "assign" did not show if used alone. This only 
+  seemed to happen on NT4, not on win9x and 2000. Fixed by Klaus Gassner. 
+----------------------------
+
+Ver 2.1 2000/02/16
+ * VirtuaWin can now remember desktop belongings upon restart!
+ * Possible to have any combination of window menu functionality, not just one as before
+ * Button for saving sticky configuration, not just upon exit
+ * Some GUI changes under the misc. setup tab.
+ * VirtuaWin will timeout if an application has crashed. The system tray icon will flash five times
+   if an application is not responding when changing desktop and the application will be ignored.
+ * Source code is more organized for easier handling and binary is linked without
+   debugging symbols, making it almost half the size
+ * Bugfix: Module enable/disable did not work properly with several modules
+ * Bugfix: Save sticky on exit did not work if VirtuaWin was shutdown by Windows shutdown/restart.
+ * Bugfix: Disabled modules were not saved if VirtuaWin was shutdown by Windows shutdown/restart.
+ * Bugfix: Documentation correction regarding MOD_CHANGEDESK w/lParam in Messages.h
+ * Bugfix: VirtuaWin tried to switch an invalid window upon every desktop change,
+   this fix will probably save a clock cycle or two :) 
+----------------------------
+
+Ver 2.0 2000/01/04
+ * Opensource! Distributed under GPL
+ * Possible to disable modules runtime
+ * Option to use the window list for assigning a window to a desktop
+ * Option to use the window list for accessing an application on another desktop
+ * Setup will create an icon in the startup folder
+----------------------------
+
+Ver 1.9.1 1999/11/22
+ * Bugfix: There was a mix-up with hot keys 2 and 5 (WIN key)
+----------------------------
+
+Ver 1.9 1999/11/20
+ * Change of compiler, now uses Lcc-Win32
+ * Module support added
+ * More customizable hotkeys 
+ * Possible to cycle through desktops in a circular way
+ * Added a crash recovery feature
+ * Some internal code cleanups and fixes
+ * Clickable links in about box
+ * Removed "mouse win key" option since it didn't work well
+ * Removed some "dimming" features in the setup dialog to decrease code size
+ * Added a "reverse up/down" option. Useful when using num pad hotkeys
+ * Some default choices are set upon first startup
+ * Keys are only registered on ok (not on apply) in setup dialog 
+ * Bugfix: Z-order of windows is not messed with anymore
+ * Bugfix: Minimized windows is also affected by sticky option
+ * Bugfix: Fixed strange behaviour when dragging a window to new 
+   desktop with "keep last active" enabled (Hmm, didn't I fix this in 1.3?)
+----------------------------
+
+Ver 1.8 1999/09/29
+ * Added a hot key option for sticky toggle
+ * Added option to turn of the moving of mouse pointer after a switch
+ * Possible to set 0 delay for mouse switch
+ * Added refresh option, for refreshing desktop after switch (for 
+   example Photoshop problems)
+ * Added option for saving sticky configuration upon exit
+ * Desktop number added in the window list
+ * Bugfix: Only possible to open one setup dialog
+ * Bugfix: Possible memory bug concerning user window functionality
+ * Bugfix: Fixed recourse leak concerning the popup menus
+----------------------------
+
+Ver 1.7.2 1999/08/09
+ * Bugfix: Mouse key control setup was lost during restarts
+----------------------------
+
+Ver 1.7.1 1999/08/06
+ * Bugfix: Some mouse options didn't save if ok was pressed
+----------------------------
+
+Ver 1.7 1999/07/15
+ * Moved popups slightly to make it possible (easier) to double-click on icon.
+ * Better look on the setup dialog.
+ * More desktops, up to 9 with different layouts and with new icons.
+ * Hot keys for accessing a desktop directly.
+ * Possible to select a key modifier for changing desktop with mouse.
+----------------------------
+
+Ver 1.6 1999/05/25
+ * User can add windows that normally refuses to switch desktop to a
+   configfile to make it switch.
+ * Install and uninstall support.
+ * Setup dialog will appear in the center of screen.
+ * Bugfix: No more flashing in taskbar when changing desktop, thanks to tip 
+   from George Algozzini.
+----------------------------
+
+Ver 1.5 1999/05/03
+ * Added sticky window functionality
+ * Toolbars should also switch now
+ * Bugfix: Some windows wouldn't get on top if keep active were enabled
+ * Bugfix: No switch if mouse clicks to long on taskbar
+----------------------------
+
+Ver 1.4 1999/04/26
+ * Child windows will also switch desktop now
+ * New option to make it possible to drag a window to new desktop over the taskbar
+ * Configurable icons
+ * Internal cleanup and optimizations
+ * Checks if mouse buttons are switched, makes it possible to drag windows to a new
+   desktop with switched mouse buttons
+----------------------------
+
+Ver 1.3 1999/04/13
+ * Solved a bug when dragging windows to new desktop and keeping active
+ * Solved a bug with the mouse warp length between upper and lower desktops
+ * Added help, very brief, but still a help file...
+----------------------------
+
+Ver 1.2beta 1999/04/12
+ * Possible to drag windows to new desktop with mouse
+ * Configurable if minimized windows will switch 
+ * Key setup was lost when cancel pressed in setup
+ * Mouse delay changes went active if cancel was pressed
+----------------------------
+
+Ver 1.1beta 1999/04/10
+ * New behavior, windows isn't moved they are hidden instead!
+ * Configurable mouse jump length
+ * Only one instance can be started
+ * When using "release focus" the focus goes to desktop instead of systray
+ * The mouse delay shows continuously when slider moves
+----------------------------
+
+Ver 0.7 1999/03/27
+ * Configure possibilities for mouse, keys and focus added
+ * Some minor internal fixes
+----------------------------
+
+Ver 0.5 1999/03/19
+ * First public version, no configure possibilities 
+----------------------------
