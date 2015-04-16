@@ -26,17 +26,16 @@ README.md         This file.
 HISTORY.TXT       Description of changes.
 COPYING.TXT       GNU General Public License Version 2.
 *.c *.h           Source files.
-*.rc *.manifest   Executable description files. 
+*.rc *.manifest   Executable description files.
 *.vcxproj *.sln   Visual Studio 2013 project files.
-*.ico             Icons for .exe and system tray.        
+*.ico             Icons for .exe and system tray.
 
 
 Contributing
 --------------------------------------------------------------
 Please feel free to contribute patches at the GitHub repo at:
 
-ttps://github.com/miabrahams/VirtuaWin
-
+https://github.com/miabrahams/VirtuaWin
 
 Copyright
 --------------------------------------------------------------
@@ -46,4 +45,3 @@ General Public License.
 Copyright (c) 1999-2005 Johan Piculell
 Copyright (c) 2006-2012 VirtuaWin (VirtuaWin@home.se)
 Copyright (c) 2015 Michael Abrahams (miabraha@gmail.com)
-
