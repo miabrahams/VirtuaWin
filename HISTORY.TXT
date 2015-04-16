@@ -1,6 +1,16 @@
 ***   VirtuaWin Revision History   ***
 --------------------------------------
 
+
+Ver 4.5 2015/04/16
+
+* 9327c1a Convert project to MSVC 2013 and Git version control. 
+
+
+
+----
+
+
 Ver 4.4 2012/10/09
 
 * 3178720 Added dynamic taskbar support for Win7
