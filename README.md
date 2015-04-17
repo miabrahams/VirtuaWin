@@ -6,7 +6,8 @@
                  <virtuawin@home.se>
                  
               Updates by Michael Abrahams
-                 (miabraha@gmail.com)
+                  miabraha@gmail.com
+        https://github.com/miabrahams/VirtuaWin/
 
 
 Description
@@ -22,13 +23,13 @@ You can check the original website for info on module development.
 
 Files
 --------------------------------------------------------------
-README.md         This file.
-HISTORY.TXT       Description of changes.
-COPYING.TXT       GNU General Public License Version 2.
-*.c *.h           Source files.
-*.rc *.manifest   Executable description files.
-*.vcxproj *.sln   Visual Studio 2013 project files.
-*.ico             Icons for .exe and system tray.
++ README.md         This file.
++ HISTORY.TXT       Description of changes.
++ COPYING.TXT       GNU General Public License Version 2.
++ *.c *.h           Source files.
++ *.rc *.manifest   Executable description files.
++ *.vcxproj *.sln   Visual Studio 2013 project files.
++ *.ico             Icons for .exe and system tray.
 
 
 Contributing
@@ -43,5 +44,7 @@ VirtuaWin is a freely distributed program and is licensed under the GNU
 General Public License.
 
 Copyright (c) 1999-2005 Johan Piculell
+
 Copyright (c) 2006-2012 VirtuaWin (VirtuaWin@home.se)
+
 Copyright (c) 2015 Michael Abrahams (miabraha@gmail.com)
