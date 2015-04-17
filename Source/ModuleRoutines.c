@@ -58,7 +58,7 @@ vwModuleLoad(int moduleIdx, TCHAR *path)
     *s1++ = '"' ;
     if(path != NULL)
     {
-        _tcscpy(s1,path) ;
+		_tcscpy_s(s1, 260, path);
         s1 += _tcslen(s1) ;
     }
     else
@@ -67,25 +67,25 @@ vwModuleLoad(int moduleIdx, TCHAR *path)
         if((s2 = _tcsrchr(s1,'\\')) != NULL)
             s1 = s2 + 1 ;
     }
-    _tcscpy(s1,moduleList[moduleIdx].description) ;
-    s2 = s1 + _tcslen(s1) ;
-    _tcscpy(s2,_T(".exe")) ;
+	_tcscpy_s(s1, 261, moduleList[moduleIdx].description);
+	s2 = s1 + _tcslen(s1);
+	_tcscpy_s(s2, 261, _T(".exe"));
     s2 += 4 ;
     if((modHWnd = vwFindWindow(s1,NULL,0)) != NULL)
     {
-        _stprintf(buff,_T("The module '%s' seems to already be running and will be re-used. This is probably due to incorrect shutdown of VirtuaWin."), moduleList[moduleIdx].description);
+		_stprintf_s(buff, 260, _T("The module '%s' seems to already be running and will be re-used. This is probably due to incorrect shutdown of VirtuaWin."), moduleList[moduleIdx].description);
         MessageBox(hWnd,buff,vwVIRTUAWIN_NAME _T(" Error"),MB_ICONWARNING);
     }
     else
     {
         // Launch the module
-        _tcscpy(s2,_T("\" -module")) ;
+		_tcscpy_s(s2, 260, _T("\" -module"));
         memset(&si, 0, sizeof(si)); 
         si.cb = sizeof(si); 
         if(!CreateProcess(NULL,buff,NULL,NULL,FALSE,0,NULL,NULL,&si,&pi))
         {
             vwLogBasic((_T("Failed to launch module: [%s] %d\n"),buff,(int) GetLastError()));
-            _stprintf(buff,_T("Failed to launch module '%s'. (Err %d)"),moduleList[moduleIdx].description,(int) GetLastError());
+            _stprintf_s(buff,260, _T("Failed to launch module '%s'. (Err %d)"),moduleList[moduleIdx].description,(int) GetLastError());
             MessageBox(hWnd,buff,vwVIRTUAWIN_NAME _T(" Error"),MB_ICONWARNING);
         }
         else
@@ -102,7 +102,7 @@ vwModuleLoad(int moduleIdx, TCHAR *path)
                 rv2 = WaitForInputIdle(pi.hProcess,10000) ;
                 if((modHWnd = vwFindWindow(s1,NULL,1)) == NULL)
                 {
-                    _stprintf(buff,_T("Failed to load module '%s' - maybe wrong class or file name? (Err %d, %d, %d)"),moduleList[moduleIdx].description,rv1,rv2,(int) GetLastError());
+                    _stprintf_s(buff,260, _T("Failed to load module '%s' - maybe wrong class or file name? (Err %d, %d, %d)"),moduleList[moduleIdx].description,rv1,rv2,(int) GetLastError());
                     MessageBox(hWnd,buff,vwVIRTUAWIN_NAME _T(" Error"),MB_ICONWARNING);
                 }
             }
@@ -127,19 +127,19 @@ vwModuleAdd(TCHAR *moduleName, TCHAR *path)
     moduleName[ll] = '\0'; 
     if(ll > vwMODULENAME_MAX)
     {
-        _stprintf(buff,_T("Name of module '%s' is too long, maximum is %d."),moduleName,vwMODULENAME_MAX) ;
+		_stprintf_s(buff, 260, _T("Name of module '%s' is too long, maximum is %d."), moduleName, vwMODULENAME_MAX);
         MessageBox(hWnd,buff,vwVIRTUAWIN_NAME _T(" Error"),MB_ICONWARNING);
         return;
     }
     if(moduleCount >= MAXMODULES)
     {
-        _stprintf(buff,_T("Max number of modules have been added, '%s' won't be loaded."), moduleName);
+		_stprintf_s(buff, 260, _T("Max number of modules have been added, '%s' won't be loaded."), moduleName);
         MessageBox(hWnd,buff,vwVIRTUAWIN_NAME _T(" Error"),MB_ICONWARNING);
         return;
     }
           
     // Add the module to the list
-    _tcsncpy(moduleList[moduleCount].description, moduleName, vwMODULENAME_MAX);
+    _tcsncpy_s(moduleList[moduleCount].description, 80, moduleName, vwMODULENAME_MAX);
     moduleList[moduleCount].disabled = vwModuleCheckDisabled(moduleName) ;
     
     if(moduleList[moduleCount].disabled)

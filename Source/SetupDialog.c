@@ -91,12 +91,12 @@ vwSetupHotKeysInitList(void)
             while((vwCommandEnum[cmd] != 0) && (vwCommandEnum[cmd] != hotkeyList[ii].command))
                 cmd++ ;
             ss = buff ;
-            _tcscpy(ss,vwCommandName[cmd]) ;
+			_tcscpy_s(ss, 128, vwCommandName[cmd]);
             if(hotkeyList[ii].desk && vwCommandEnum[cmd])
             {
                 ss = _tcschr(ss,'#') ;
-                ss += _stprintf(ss,_T("%d"),hotkeyList[ii].desk) ;
-                _tcscpy(ss,_tcschr(vwCommandName[cmd],'#') + 1) ;
+				ss += _stprintf_s(ss, 128, _T("%d"), hotkeyList[ii].desk);
+				_tcscpy_s(ss, 128, _tcschr(vwCommandName[cmd], '#') + 1);
             }
             ss += _tcslen(ss) ;
             *ss++ = '\t' ;
@@ -190,7 +190,7 @@ initDesktopProperties(void)
     TCHAR buff[32] ;
     int pcm = pageChangeMask ;
     pageChangeMask = -1 ;
-    _stprintf(buff,_T("Name of desktop %d:"),currentDesk) ;
+	_stprintf_s(buff, 260, _T("Name of desktop %d:"), currentDesk);
     SetDlgItemText(setupGeneralHWnd, IDC_DESKTOPLBL, buff) ;
     SetDlgItemText(setupGeneralHWnd, IDC_DESKTOPNAME, (desktopName[currentDesk] != NULL) ? desktopName[currentDesk]:_T("")) ;
     pageChangeMask = pcm ;
@@ -430,7 +430,7 @@ vwSetupHotKeysInit(void)
         jj = currentDesk ;
     for(ii=1 ; ii<=jj ; ii++)
     {
-        _stprintf(buff,_T("%d"),ii) ;
+        _stprintf_s(buff, 10, _T("%d"),ii) ;
         SendDlgItemMessage(setupHotkeysHWnd, IDC_HOTKEY_DSK, CB_ADDSTRING, 0, (LONG) buff) ;
     }
     SendDlgItemMessage(setupHotkeysHWnd,IDC_HOTKEY_DSK,CB_SETCURSEL,currentDesk-1,0) ;
@@ -845,12 +845,12 @@ setupModulesList(HWND hDlg)
     SendDlgItemMessage(hDlg, IDC_MODLIST, LB_RESETCONTENT, 0, 0);
     for(index = 0; index < moduleCount; index++)
     {
-        _tcsncpy(tmpName,moduleList[index].description,100) ;
+        _tcsncpy_s(tmpName,128, moduleList[index].description,100) ;
         tmpName[100] = '\0' ;
         if(moduleList[index].disabled)
-            _tcscat(tmpName,_T(" (disabled)")) ;
+			_tcscat_s(tmpName, 100, _T(" (disabled)"));
         else if(moduleList[index].handle == NULL)
-            _tcscat(tmpName,_T(" (failed to run)")) ;
+			_tcscat_s(tmpName, 100, _T(" (failed to run)"));
         SendDlgItemMessage(hDlg, IDC_MODLIST, LB_ADDSTRING, 0, (LONG)tmpName);
     }
 }
@@ -1058,7 +1058,7 @@ setupExpert(HWND hDlg, UINT message, UINT wParam, LONG lParam)
             PROCESS_INFORMATION pi;  
             TCHAR cmdLn[MAX_PATH+9], *ss ;
             
-            _tcscpy(cmdLn,_T("explorer ")) ;
+            _tcscpy_s(cmdLn,269,_T("explorer ")) ;
             GetFilename(vwVIRTUAWIN_CFG,1,cmdLn+9) ;
             if((ss = _tcsrchr(cmdLn,'\\')) != NULL)
                 *ss = '\0' ;
@@ -1071,7 +1071,7 @@ setupExpert(HWND hDlg, UINT message, UINT wParam, LONG lParam)
             }
             else
             {
-                _stprintf(cmdLn,_T("Failed to launch explorer. (Err %d)"),(int) GetLastError());
+				_stprintf_s(cmdLn, 260, _T("Failed to launch explorer. (Err %d)"), (int)GetLastError());
                 MessageBox(hWnd,cmdLn,vwVIRTUAWIN_NAME _T(" Error"),MB_ICONWARNING) ;
             }
         }
@@ -1090,7 +1090,7 @@ setupExpert(HWND hDlg, UINT message, UINT wParam, LONG lParam)
                 GetWindowRect(wb->handle,&pos) ;
                 GetClassName(wb->handle,cname,vwCLASSNAME_MAX);
                 if(!GetWindowText(wb->handle,wname,vwWINDOWNAME_MAX))
-                    _tcscpy(wname,vwWTNAME_NONE);
+                    _tcscpy_s(wname,128, vwWTNAME_NONE);
                 if(wb->flags & vwWINFLAGS_MANAGED)
                 {
                     win = (vwWindow *) wb ;

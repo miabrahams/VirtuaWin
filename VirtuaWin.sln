@@ -11,6 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "VirtuaWin", "VirtuaWin.vcxp
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WinList", "WinList.vcxproj", "{7F6B8F62-4366-47E2-9C5A-43E9630B0F3B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{354E2FA3-0DC5-4F1B-9905-5B938EDBB9DE} = {354E2FA3-0DC5-4F1B-9905-5B938EDBB9DE}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "vwHook", "vwHook.vcxproj", "{354E2FA3-0DC5-4F1B-9905-5B938EDBB9DE}"
 EndProject

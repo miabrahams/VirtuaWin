@@ -189,7 +189,7 @@ enumWindowsProc(HWND hwnd, LPARAM lParam)
     windowList = win ;
     GetClassName(hwnd,win->className,vwCLASSNAME_MAX);
     if(!GetWindowText(hwnd,win->windowName,vwWINDOWNAME_MAX))
-        _tcscpy(win->windowName, _T("<None>")) ;
+        _tcscpy_s(win->windowName, 128, _T("<None>")) ;
     
     ListView_SetItemText(listHWnd,idx,1,sbuff) ;
     ListView_SetItemText(listHWnd,idx,2,win->className) ;
@@ -308,7 +308,7 @@ enumWindowsSaveListProc(HWND hwnd, LPARAM lParam)
     GetClassName(hwnd,class,vwCLASSNAME_MAX);
     if(!GetWindowText(hwnd,text,vwWINDOWNAME_MAX))
 #endif
-        strcpy(text,"<None>");
+        strcpy_s(text,128, "<None>");
     
     if(vwHandle != 0)
         desk = SendMessage(vwHandle,VW_WINGETINFO,(WPARAM) hwnd,0) ;
@@ -466,7 +466,7 @@ DialogFunc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
                 int ii=1 ;
                 while(ii < 1000)
                 {
-                    _stprintf(fname,_T("%sWinList_%d.log"),(winInitialised) ? userAppPath:_T(""),ii) ;
+                    _stprintf_s(fname,260, _T("%sWinList_%d.log"),(winInitialised) ? userAppPath:_T(""),ii) ;
                     if(GetFileAttributes(fname) == INVALID_FILE_ATTRIBUTES)
                         break ;
                     ii++ ;
@@ -475,7 +475,7 @@ DialogFunc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
                     MessageBox(hwndDlg, _T("Cannot create a WinList_#.log file, please clean up your user directory."), _T("VirtuaWinList Error"), MB_ICONWARNING);
                 else
                 {
-                    wdFp = _tfopen(fname,_T("w+")) ;
+					_tfopen_s(&wdFp, fname, _T("w+"));
                     EnumWindows(enumWindowsSaveListProc,(LPARAM) wdFp) ;
                     fclose(wdFp) ;
                 }
@@ -549,7 +549,7 @@ MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 #ifdef _UNICODE
                 MultiByteToWideChar(CP_ACP,0,(char *) cds->lpData,-1,userAppPath,MAX_PATH) ;
 #else
-                strcpy(userAppPath,(char *) cds->lpData) ;
+                strcpy_s(userAppPath,260,(char *) cds->lpData) ;
 #endif
             }
         }

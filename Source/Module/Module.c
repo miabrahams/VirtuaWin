@@ -55,8 +55,8 @@ DisplayInfo(HWND hwnd, TCHAR *msgLabel)
         exit(1) ;
     }
     if(deskName[0] == '\0')
-        _stprintf_s(deskName,_T("<Desktop %d>"),currentDesk) ;
-    _stprintf_s(buff,_T("Desktop Size:\t%d\nInstall path:\t%s\t\nUser path:\t%s\t\n\nVW Message:\t%s\nDesk Layout:\t%d x %d\nCurrent Desk:\t%d\nDesk Name:\t%s"),
+        _stprintf_s(deskName,260, _T("<Desktop %d>"),currentDesk) ;
+    _stprintf_s(buff,780, _T("Desktop Size:\t%d\nInstall path:\t%s\t\nUser path:\t%s\t\n\nVW Message:\t%s\nDesk Layout:\t%d x %d\nCurrent Desk:\t%d\nDesk Name:\t%s"),
               deskSize,installPath,userAppPath,msgLabel,deskX,deskY,currentDesk,deskName) ;
     MessageBox(hwnd,buff,_T("VirtuaWin Module Example"),0);
 }
@@ -103,7 +103,7 @@ MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 #ifdef _UNICODE
                 MultiByteToWideChar(CP_ACP,0,(char *) cds->lpData,-1,installPath,MAX_PATH) ;
 #else
-                strncpy(installPath,(char *) cds->lpData,MAX_PATH) ;
+                strncpy_s(installPath,260,(char *) cds->lpData,MAX_PATH) ;
 #endif
                 installPath[MAX_PATH-1] = '\0' ;
             }
@@ -115,7 +115,7 @@ MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 #ifdef _UNICODE
                 MultiByteToWideChar(CP_ACP,0,(char *) cds->lpData,-1,userAppPath,MAX_PATH) ;
 #else
-                strncpy(userAppPath,(char *) cds->lpData,MAX_PATH) ;
+                strncpy_s(userAppPath, 260, (char *) cds->lpData,MAX_PATH) ;
 #endif
                 userAppPath[MAX_PATH-1] = '\0' ;
             }
@@ -128,7 +128,7 @@ MainWndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
 #ifdef _UNICODE
                     MultiByteToWideChar(CP_ACP,0,(char *) cds->lpData,-1,deskName,MAX_PATH) ;
 #else
-                    strncpy(deskName,(char *) cds->lpData,MAX_PATH) ;
+                    strncpy_s(deskName,260, (char *) cds->lpData,MAX_PATH) ;
 #endif
                     deskName[MAX_PATH-1] = '\0' ;
                 }

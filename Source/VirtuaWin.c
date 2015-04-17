@@ -23,6 +23,7 @@
 
 
 // Includes
+#define vwLOG_VERBOSE
 #include "VirtuaWin.h"
 #include "DiskRoutines.h"
 #include "ConfigParameters.h"
@@ -665,17 +666,17 @@ vwIconSet(int deskNumber, int hungCount)
             nIconD.hIcon = icons[deskNumber];
         ll = 0 ;
         if(hungCount)
-            ll = _stprintf(nIconD.szTip,_T("%d window%s not responding\n"),hungCount,(hungCount==1) ? _T(""):_T("s")) ;
+            ll = _stprintf_s(nIconD.szTip, 128, _T("%d window%s not responding\n"),hungCount,(hungCount==1) ? _T(""):_T("s")) ;
         if(vwIsDisabled())
-            _tcscpy(nIconD.szTip,vwVIRTUAWIN_NAME _T(" - Disabled")); /* Tooltip */
+            _tcscpy_s(nIconD.szTip,128, vwVIRTUAWIN_NAME _T(" - Disabled")); /* Tooltip */
         else
         {
-            ll += _stprintf(nIconD.szTip+ll,_T("Desktop %d"),deskNumber) ;
+            ll += _stprintf_s(nIconD.szTip+ll,128, _T("Desktop %d"),deskNumber) ;
             if(desktopName[deskNumber] != NULL)
             {
                 nIconD.szTip[ll++] = ':' ;
                 nIconD.szTip[ll++] = ' ' ;
-                _tcsncpy(nIconD.szTip+ll,desktopName[deskNumber],64-ll) ;
+                _tcsncpy_s(nIconD.szTip+ll,128, desktopName[deskNumber],64-ll) ;
                 nIconD.szTip[63] = '\0' ;
             }
         }
@@ -740,7 +741,7 @@ vwIconLoad(void)
             iconId = IDI_ST_DIS_1 ;
         iconCount = 4 ;
     }
-    _tcscpy(buff,_T("icons/")) ;
+    _tcscpy_s(buff,16, _T("icons/")) ;
     for(ii = 0 ; ii<vwDESKTOP_SIZE ; ii++)
     {
         icons[ii] = NULL ;
@@ -755,7 +756,7 @@ vwIconLoad(void)
             }
             else
                 *ss++ = ii+'0' ;
-            _tcscpy(ss,_T(".ico")) ;
+            _tcscpy_s(ss,16,_T(".ico")) ;
             if(((icons[ii] = (HICON) LoadImage(hInst, buff, IMAGE_ICON, xIcon, yIcon, LR_LOADFROMFILE)) == NULL) &&
                ((ii > iconCount) ||
                 ((icons[ii] = (HICON) LoadImage(hInst, MAKEINTRESOURCE(iconId+ii), IMAGE_ICON, xIcon, yIcon, 0)) == NULL)) &&
@@ -829,7 +830,7 @@ vwHotkeyRegister(int warnAll)
         {
             if(hotkeyList[ii].atom == 0)
             {
-                _stprintf(buff,_T("vwAtom%d"),ii) ;
+				_stprintf_s(buff, 260, _T("vwAtom%d"), ii);
                 hotkeyList[ii].atom = GlobalAddAtom(buff);
             }
             if(hotkeyList[ii].atom == 0)
@@ -838,7 +839,7 @@ vwHotkeyRegister(int warnAll)
                     (warnAll || ((hotkeyList[ii].command != vwCMD_UI_ENABLESTATE) &&
                                  (hotkeyList[ii].command != vwCMD_UI_BOSS_KEY) && (hotkeyList[ii].command != vwCMD_UI_UNBOSS_KEY))))
             {
-                _stprintf(buff,_T("Failed to register hotkey %d, check hotkeys."),ii+1) ;
+				_stprintf_s(buff, 260, _T("Failed to register hotkey %d, check hotkeys."), ii + 1);
                 MessageBox(hWnd,buff,vwVIRTUAWIN_NAME _T(" Error"), MB_ICONWARNING);
             }
         }
@@ -1068,9 +1069,9 @@ createDeskImage(int deskNo, int createDefault)
     
     /* Create the desk_#.bmp file */ 
     GetFilename(vwFILE_COUNT,1,fname) ;
-    _stprintf(fname+_tcslen(fname),_T("desk_%d.bmp"),deskNo) ;
+	_stprintf_s(fname + _tcslen(fname), 260, _T("desk_%d.bmp"), deskNo);
     if(GetDIBits(bitmapDC,deskImageBitmap,0,deskImageInfo.bmiHeader.biHeight,deskImageData,&deskImageInfo,DIB_RGB_COLORS) &&
-       ((fp = _tfopen(fname,_T("wb+"))) != NULL))
+		((_tfopen_s(&fp, fname, _T("wb+"))) != 0))
     {
         BITMAPFILEHEADER hdr ;
         hdr.bfType = 0x4d42 ;
@@ -1190,12 +1191,12 @@ showHelp(HWND aHWnd, TCHAR *topic)
     STARTUPINFO si;
     PROCESS_INFORMATION pi;  
 
-    _tcscpy(buff,_T("\"hh\" mk:@MSITStore:")) ;
+    _tcscpy_s(buff,324, _T("\"hh\" mk:@MSITStore:")) ;
     GetFilename(vwVIRTUAWIN_HLP,0,buff+19);
     if(topic != NULL)
     {
-        _tcscat(buff,_T("::/VirtuaWin_")) ;
-        _tcscat(buff,topic) ;
+		_tcscat_s(buff, 324, _T("::/VirtuaWin_"));
+		_tcscat_s(buff, 324, topic);
     }
     memset(&si, 0, sizeof(si)); 
     si.cb = sizeof(si); 
@@ -1847,8 +1848,8 @@ vwWindowSetSticky(vwWindow *win, int state)
         {
             if(state < 0) // toggle sticky state - set state so all owner windows are set correctly.
                 state = vwWindowIsSticky(win) ^ TRUE;
-            vwLogVerbose((_T("Setting Sticky: %x %x - %d -> %d\n"),(int) win->handle,
-                          (int) theWin,(int) vwWindowIsSticky(win),state)) ;
+            vwLogVerbose((_T("Setting Sticky: %x theWin = %x - %d -> %d\n"),(int) win->handle,
+                          (int) 1,(int) vwWindowIsSticky(win),state)) ;
             if(state)
             {
                 win->flags |= vwWINFLAGS_STICKY ;
@@ -2262,7 +2263,7 @@ windowListUpdate(void)
                 GetWindowRect(win->handle,&pos) ;
                 GetClassName(win->handle,cname,vwCLASSNAME_MAX);
                 if(!GetWindowText(win->handle,wname,vwWINDOWNAME_MAX))
-                    _tcscpy(wname,vwWTNAME_NONE);
+                    _tcscpy_s(wname, 128, vwWTNAME_NONE);
                 vwLogBasic((_T("Got new window %8x %08x %08x Flg %x Desk %d Proc %d %x Link %x Pos %d %d\n  Class \"%s\" Title \"%s\"\n"),
                             (int)win->handle,(int)GetWindowLong(win->handle, GWL_STYLE),(int)win->exStyle,
                             (int)win->flags,(int)win->desk,(int)win->processId,(int)((win->processNext == NULL) ? 0:win->processNext->handle),
@@ -3436,7 +3437,7 @@ winListCreateMenuTitleLine(HMENU hMenu, MENUITEMINFO *minfo, int offset, int des
 {
     TCHAR buff[40], *ss ;
     
-    _tcscpy(buff,_T("Desktop ")) ;
+    _tcscpy_s(buff, 40, _T("Desktop ")) ;
     ss = buff + 8 ;
     if(desktopNo >= 10)
         *ss++ = (desktopNo/10)+'0' ;
@@ -3445,7 +3446,7 @@ winListCreateMenuTitleLine(HMENU hMenu, MENUITEMINFO *minfo, int offset, int des
     if(desktopName[desktopNo] != NULL)
     {
         *ss++ = ' ' ;
-        _tcsncpy(ss,desktopName[desktopNo],20) ;
+		_tcsncpy_s(ss, 40, desktopName[desktopNo], 20);
         ss[19] = '\0' ;
     }
     else
@@ -4197,32 +4198,32 @@ WindowInfoDialogFunc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
                 static TCHAR *winHandle[3] = { _T("Standard"), _T("Move"), _T("Minimize") } ;
                 static TCHAR *tbbHandle[3] = { _T("Standard"), _T("Show"), _T("Toolwin") } ;
                 ss = buff ;
-                _tcscpy(ss,_T("Class Name:\t")) ;
-                ss += _tcslen(ss) ;
+                _tcscpy_s(ss, 708, _T("Class Name:\t")) ;
+				ss += _tcslen(ss);
                 GetClassName(infoWin,ss,vwCLASSNAME_MAX);
-                ss += _tcslen(ss) ;
-                _tcscpy(ss,_T("\r\nWindow Name:\t")) ;
-                ss += _tcslen(ss) ;
+				ss += _tcslen(ss);
+				_tcscpy_s(ss, 708, _T("\r\nWindow Name:\t"));
+				ss += _tcslen(ss);
                 if(!GetWindowText(infoWin,ss,vwWINDOWNAME_MAX))
-                    _tcscpy(ss,vwWTNAME_NONE);
-                ss += _tcslen(ss) ;
-                _tcscpy(ss,_T("\r\nProcess Name:\t")) ;
-                ss += _tcslen(ss) ;
+					_tcscpy_s(ss, 708, vwWTNAME_NONE);
+				ss += _tcslen(ss);
+				_tcscpy_s(ss, 708, _T("\r\nProcess Name:\t"));
+				ss += _tcslen(ss);
                 if(GetWindowThreadProcessId(infoWin,&procId) == 0)
                     procId = 0 ;
                 if(vwGetModuleFileNameEx == NULL)
-                    _tcscpy(ss,_T("<Unsupported>"));
+					_tcscpy_s(ss,708, _T("<Unsupported>"));
                 else if((procId != 0) && ((procHdl=OpenProcess(PROCESS_QUERY_INFORMATION|PROCESS_VM_READ,FALSE,procId)) != NULL))
                 {
                     vwGetModuleFileNameEx(procHdl,NULL,ss,MAX_PATH) ;
                     CloseHandle(procHdl) ;
                 }
                 if(ss[0] == '\0')
-                    _tcscpy(ss,_T("<Unknown>"));
-                ss += _tcslen(ss) ;
+					_tcscpy_s(ss, 708, _T("<Unknown>"));
+				ss += _tcslen(ss);
                     
                 GetWindowRect(infoWin,&pos) ;
-                ss += _stprintf(ss,_T("\r\n\tHandle:\t%x\r\n\tProcess:\t%d\r\n\tParent:\t%x\r\n\tOwner:\t%x\r\n\tStyles:\t%08x %08x\r\n\tPosition:\t%d %d %d %d\r\n\r\nThis window is "),
+				ss += _stprintf_s(ss, 708, _T("\r\n\tHandle:\t%x\r\n\tProcess:\t%d\r\n\tParent:\t%x\r\n\tOwner:\t%x\r\n\tStyles:\t%08x %08x\r\n\tPosition:\t%d %d %d %d\r\n\r\nThis window is "),
                                 (int)infoWin,(int)procId,(int)GetParent(infoWin),(int)GetWindow(infoWin,GW_OWNER),
                                 (int)GetWindowLong(infoWin,GWL_STYLE),(int)GetWindowLong(infoWin,GWL_EXSTYLE),
                                 (int)pos.top,(int)pos.bottom,(int)pos.left,(int)pos.right) ;
@@ -4231,19 +4232,19 @@ WindowInfoDialogFunc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
                 windowListUpdate() ;
                 win = (vwWindow *) vwWindowBaseFind(infoWin) ;
                 if(win == NULL)
-                    _tcscpy(ss,_T("not managed\r\n")) ;
+					_tcscpy_s(ss, 708, _T("not managed\r\n"));
                 else if(vwWindowIsManaged(win))
-                    _stprintf(ss,_T("being managed\r\n\tProc:\t%x\r\n\tLink:\t%x\r\n\tFlags:\t%08x\r\n\tExStyle:\t%08x\r\n\tDesk:\t%d\r\n\tHandling:\t%s, %s\r\n"),
+					_stprintf_s(ss, 708, _T("being managed\r\n\tProc:\t%x\r\n\tLink:\t%x\r\n\tFlags:\t%08x\r\n\tExStyle:\t%08x\r\n\tDesk:\t%d\r\n\tHandling:\t%s, %s\r\n"),
                               (int)((win->processNext == NULL) ? 0:win->processNext->handle),(int)((win->linkedNext == NULL) ? 0:win->linkedNext->handle),
                               (int)win->flags,(int)win->exStyle,(int)win->desk,
                               winHandle[(win->flags & vwWTFLAGS_HIDEWIN_MASK) >> vwWTFLAGS_HIDEWIN_BITROT],
                               tbbHandle[(win->flags & vwWTFLAGS_HIDETSK_MASK) >> vwWTFLAGS_HIDETSK_BITROT]) ;
                 else
-                    _stprintf(ss,_T("not managed\r\n\tFlags:\t%08x\r\n"),(int)win->flags) ;
+					_stprintf_s(ss, 708, _T("not managed\r\n\tFlags:\t%08x\r\n"), (int)win->flags);
                 vwMutexRelease();
             }
             else
-                _tcscpy(buff,_T("Window has been closed.")) ;
+				_tcscpy_s(buff, 708, _T("Window has been closed."));
             SetDlgItemText(hwndDlg,IDC_WID_INFO,buff) ;
             return TRUE;
         }
@@ -4318,7 +4319,7 @@ popupWindowMenu(HWND theWin, int wmFlags)
         }
         else
             AppendMenu(hpopup,MF_POPUP,(UINT_PTR) moveMenu,_T("Mo&ve to Desktop"));
-        _tcscpy(buff,_T("Move to Desktop & ")) ;
+        _tcscpy_s(buff, 40, _T("Move to Desktop & ")) ;
         for(ii = 1 ; ii <= nDesks ; ii++)
         {
             if(ii >= 10)
@@ -4328,7 +4329,7 @@ popupWindowMenu(HWND theWin, int wmFlags)
             {
                 buff[18] = ':' ;
                 buff[19] = ' ' ;
-                _tcsncpy(buff+20,desktopName[ii],20) ;
+                _tcsncpy_s(buff+20,40, desktopName[ii],20) ;
                 buff[39] = '\0' ;
             }
             else
@@ -4813,7 +4814,7 @@ popupControlMenu(HWND aHWnd, int cmFlags)
             AppendMenu(hpopup,MF_POPUP,(UINT_PTR) moveMenu,_T("Mo&ve to Desktop"));
         
         insertMenuItems(hpopup,2200,&mi,&mid) ;
-        _tcscpy(buff,_T("Move to Desktop & ")) ;
+        _tcscpy_s(buff, 40, _T("Move to Desktop & ")) ;
         for(ii = 1 ; ii <= nDesks ; ii++)
         {
             if(ii >= 10)
@@ -4823,7 +4824,7 @@ popupControlMenu(HWND aHWnd, int cmFlags)
             {
                 buff[18] = ':' ;
                 buff[19] = ' ' ;
-                _tcsncpy(buff+20,desktopName[ii],20) ;
+                _tcsncpy_s(buff+20, 40, desktopName[ii],20) ;
                 buff[39] = '\0' ;
             }
             else
@@ -5687,11 +5688,13 @@ VirtuaWinInitContinue(HWND hwnd, UINT uMsg, UINT idEvent, DWORD dwTime)
 static void
 VirtuaWinInit(HINSTANCE hInstance, LPSTR cmdLine)
 {
+
     OSVERSIONINFO os;
     HINSTANCE libHandle ; 
     WNDCLASSEX wc;
     hInst = hInstance;
     
+
 #ifdef _WIN32_MEMORY_DEBUG
     /* Enable heap checking on each allocate and free */
     _CrtSetDbgFlag (_CRTDBG_ALLOC_MEM_DF|_CRTDBG_DELAY_FREE_MEM_DF|
@@ -5715,7 +5718,7 @@ VirtuaWinInit(HINSTANCE hInstance, LPSTR cmdLine)
         }
         /* get the message from the command-line, default is to display configuration window... */
         if(cmdLine != NULL)
-            sscanf(cmdLine+4,"%i %i %li",&message,&wParam,&lParam) ;
+            sscanf_s(cmdLine+4,"%i %i %li",&message,&wParam,&lParam) ;
         /* post message and quit */
         exit(SendMessage(hWnd,message,wParam,lParam)) ;
     }
@@ -5758,6 +5761,7 @@ VirtuaWinInit(HINSTANCE hInstance, LPSTR cmdLine)
     wc.hIconSm = (HICON) LoadImage(hInstance, MAKEINTRESOURCE(IDI_VIRTUAWIN), IMAGE_ICON,
                                    GetSystemMetrics(SM_CXSMICON),
                                    GetSystemMetrics(SM_CYSMICON), 0);
+
     if(RegisterClassEx(&wc) == 0)
     {
         MessageBox(hWnd,_T("Failed to register class!"),vwVIRTUAWIN_NAME _T(" Error"), MB_ICONWARNING);
@@ -5789,10 +5793,10 @@ VirtuaWinInit(HINSTANCE hInstance, LPSTR cmdLine)
     }
     if(vwLogFlag)
     {
-        TCHAR logFname[MAX_PATH] ;
+        TCHAR logFname[MAX_PATH] = _T("");
         GetFilename(vwVIRTUAWIN_CFG,1,logFname) ;
-        _tcscpy(logFname+_tcslen(logFname)-3,_T("log")) ;
-        vwLogFile = _tfopen(logFname,_T("w+")) ;
+        _tcscpy_s(logFname+_tcslen(logFname)-3,260, _T("log")) ;
+		_tfopen_s(&vwLogFile, logFname, _T("w+"));
         vwLogBasic((vwVIRTUAWIN_NAME_VERSION _T("\n"))) ;
     }
     if(useWindowRules)

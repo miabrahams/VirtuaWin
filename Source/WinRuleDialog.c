@@ -60,7 +60,7 @@ windowRuleDialogInitList(HWND hDlg)
         {
             ii++ ;
             ss = buff ;
-            ss += _stprintf_s(ss,_T("%d"),ii) ;
+            ss += _stprintf_s(ss, 388, _T("%d"),ii) ;
             for(jj=0 ; jj<vwWTNAME_COUNT ; jj++)
             {
                 if(wt->name[jj] != NULL)
@@ -74,7 +74,7 @@ windowRuleDialogInitList(HWND hDlg)
                     kk = _tcslen(wt->name[jj]) ;
                     if(kk > 120)
                     {
-                        _tcsncpy(ss,wt->name[jj],120) ;
+                        _tcsncpy_s(ss,388, wt->name[jj],120) ;
                         ss += 120 ;
                         *ss++ = '.' ;
                         *ss++ = '.' ;
@@ -82,7 +82,7 @@ windowRuleDialogInitList(HWND hDlg)
                     }
                     else
                     {
-                        _tcsncpy(ss,wt->name[jj],kk) ;
+                        _tcsncpy_s(ss,388, wt->name[jj],kk) ;
                         ss += kk ;
                     }
                     if(wt->flags & (2 << (jj << 1)))
@@ -136,14 +136,14 @@ windowRuleDialogInitItem(HWND hDlg)
                     if(wt->flags & (1 << (ii << 1)))
                     {
                         buff[0] = '*' ;
-                        _tcscpy(buff+1,wt->name[ii]) ;
+						_tcscpy_s(buff + 1, 1024, wt->name[ii]);
                     }
                     else
-                        _tcscpy(buff,wt->name[ii]) ;
+						_tcscpy_s(buff, 1024, wt->name[ii]);
                     if(wt->flags & (2 << (ii << 1)))
-                        _tcscat(buff,_T("*")) ;
+						_tcscat_s(buff, 1024, _T("*"));
                     if(buff[0] == '\0')
-                        _tcscpy(buff,vwWTNAME_NONE);
+                        _tcscpy_s(buff, 1024,vwWTNAME_NONE);
                 }
                 SetDlgItemText(hDlg,wtypeNameEntry[ii],buff) ;
             } while(--ii >= 0) ;
@@ -215,7 +215,7 @@ windowRuleDialogInit(HWND hDlg, int firstTime)
     SendDlgItemMessage(hDlg,IDC_WTYPE_AMDSK,CB_RESETCONTENT,0, 0);
     for(ii=1 ; ii<=deskCount ; ii++)
     {
-        _stprintf(buff,_T("%d"),ii) ;
+		_stprintf_s(buff, 260, _T("%d"), ii);
         SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_ADDSTRING, 0, (LONG) buff) ;
     }
     SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_SETCURSEL, 0, 0) ;
@@ -232,7 +232,7 @@ windowRuleDialogInit(HWND hDlg, int firstTime)
         buff[0] = 0 ;
         GetWindowText(initWin,buff,MAX_PATH);
         if(buff[0] == 0)
-            _tcscpy(buff,vwWTNAME_NONE);
+            _tcscpy_s(buff, 260,vwWTNAME_NONE);
         SetDlgItemText(hDlg,wtypeNameEntry[1],buff) ;
         buff[0] = 0 ;
         if((vwGetModuleFileNameEx != NULL) &&

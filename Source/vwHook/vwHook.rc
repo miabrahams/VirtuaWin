@@ -1,6 +1,6 @@
 #include <windows.h>
-#include "Defines.h"
-#include "Resource.h"
+#include "..\Defines.h"
+#include "..\Resource.h"
 
 #define _T(x) x
 

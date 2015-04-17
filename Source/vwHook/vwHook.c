@@ -26,7 +26,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
-#include "Messages.h"
+#include "..\Messages.h"
 #include "vwHook.h"
 
 #ifdef _MSC_VER
