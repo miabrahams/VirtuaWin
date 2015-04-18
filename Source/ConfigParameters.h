@@ -66,6 +66,7 @@ extern vwUByte winListCompact;     // if window list menu should be compact
 extern vwUByte winMenuCompact;     // if current window menu should be compact
 extern vwUByte ctlMenuCompact;     // if control menu should be compact
 extern vwUByte hotkeyMenuLoc;      // Location to use if menu/list is opened via a hotkey
+extern vwUByte aggressiveRules;	   // Aggressive rule enforcement
 extern vwUByte minWinHide;         // Flag to determine how to hide minimized windows
 extern vwUByte vwHookUse;          // Use vwHook to resolve activate issues
 

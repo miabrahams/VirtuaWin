@@ -58,7 +58,8 @@ BEGIN
     AUTOCHECKBOX    "Mouse opens compact window list", IDC_COMPACTWLIST, 10, 144, 130, 10
     AUTOCHECKBOX    "Mouse opens compact window menu", IDC_COMPACTWMENU, 10, 155, 130, 10
     AUTOCHECKBOX    "Mouse opens compact control menu", IDC_COMPACTCMENU, 10, 166, 130, 10
-    AUTOCHECKBOX    "Hotkey opens menu or list at fixed location", IDC_HOTKEYMENULOC, 10, 177, 160, 10
+    AUTOCHECKBOX    "Hotkey opens menu or list at fixed location", IDC_HOTKEYMENULOC, 10, 177, 160, 10    
+    AUTOCHECKBOX    "Enforce rules aggressively", IDC_AGGRESSIVE, 10, 188, 149, 10
 END
 
 IDD_PROPPAGE_HOTKEYS DIALOG 0, 0, 210, 250

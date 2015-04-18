@@ -1573,6 +1573,7 @@
 #define NEWFILEOPENV3ORD                1553
 #define NEWFORMATDLGWITHLINK            1591
 #define IDC_MANAGE_LINK                 1592
+#define IDC_AGGRESSIVE                  2000
 #define _WIN32_IE_IE70                  0x0700
 #define _WIN32_IE_IE80                  0x0800
 #define CS_SAVEBITS                     0x0800

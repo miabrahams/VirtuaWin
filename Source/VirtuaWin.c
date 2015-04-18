@@ -181,6 +181,7 @@ vwUByte initialDesktop = 0 ;
 vwUByte deskWrap = 0 ;          
 vwUByte invertY = 0 ;           
 vwUByte hotkeyMenuLoc = 0 ;
+vwUByte aggressiveRules = 0 ;
 vwUByte winListContent = (vwWINLIST_ACCESS | vwWINLIST_ASSIGN | vwWINLIST_STICKY) ;
 vwUByte winListCompact = 0 ;
 vwUByte winMenuCompact = 1 ;
@@ -2357,14 +2358,11 @@ windowListUpdate(void)
 				activateAction = (j >> vwWINFLAGS_HWACT_BITROT) - 1 ;
 
 			//Experimental: review the rules to make sure we're not on the wrong desk. 
-			wt = vwWindowRuleFind(activeHWnd, (vwWindowRule *)win->zOrder[0]);
+			wt = vwWindowRuleFind(activeHWnd, NULL);
 			win->zOrder[0] = (vwUInt)wt;
-			if ((wt != NULL) && vwWindowIsNotSticky(win) &&
-				(wt->flags & vwWTFLAGS_MOVE) && (desktopUsed[wt->desk] != 0) && wt->desk != win->desk) {
+			if (aggressiveRules && (wt != NULL) && vwWindowIsNotSticky(win) && (wt->flags & vwWTFLAGS_MOVE) 
+				&& (desktopUsed[wt->desk] != 0) && (wt->desk != win->desk)) {
 				vwLogBasic((_T("Moving window %x from desktop = %d to match rule desktop = %d.\n"), (int)activeHWnd, (int)win->desk, (int)wt->desk));
-				// win->flags |= (wt->flags & vwWINFLAGS_MOVE_IMMEDIATE);
-				// win->desk = wt->desk;	
-				// win->flags &= ~vwWINFLAGS_INITIALIZED; //Ask for a refresh
 				vwWindowSetDesk(win, wt->desk, 1, TRUE);
 				setForegroundWin(NULL, 0);
 			}

@@ -784,6 +784,7 @@ loadVirtuawinConfig(void)
 		vwConfigReadInt(fp,buff,ii,winMenuCompact);
 		vwConfigReadInt(fp,buff,ii,useDynButtonRm);
 		vwConfigReadInt(fp,buff,ii,hotkeyMenuLoc);
+		vwConfigReadInt(fp, buff, ii, aggressiveRules);
 		vwConfigReadInt(fp,buff,ii,vwHookUse);
 		vwConfigReadInt(fp,buff,ii,useDskChgModRelease);
 		vwConfigReadInt(fp,buff,ii,initialDesktop);
@@ -855,6 +856,7 @@ saveVirtuawinConfig(void)
 		fprintf(fp, "winMenuCompact# %d\n", winMenuCompact);
 		fprintf(fp, "useDynButtonRm# %d\n", useDynButtonRm);
 		fprintf(fp, "hotkeyMenuLoc# %d\n", hotkeyMenuLoc);
+		fprintf(fp, "aggressiveRules# %d\n", aggressiveRules);
 		fprintf(fp, "vwHookUse# %d\n", vwHookUse);
 		fprintf(fp, "useDskChgModRelease# %d\n", useDskChgModRelease);
 		fprintf(fp, "initialDesktop# %d\n", initialDesktop);

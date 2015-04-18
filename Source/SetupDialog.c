@@ -257,6 +257,9 @@ setupGeneral(HWND hDlg, UINT message, UINT wParam, LONG lParam)
 				SendDlgItemMessage(hDlg, IDC_DESKCYCLE, BM_SETCHECK, 1, 0);
 			if(hotkeyMenuLoc)
 				SendDlgItemMessage(hDlg, IDC_HOTKEYMENULOC, BM_SETCHECK, 1, 0);
+
+			if (aggressiveRules)
+				SendDlgItemMessage(hDlg, IDC_AGGRESSIVE, BM_SETCHECK, 1, 0);
 			if(winListCompact)
 				SendDlgItemMessage(hDlg, IDC_COMPACTWLIST, BM_SETCHECK, 1, 0);
 			if(winMenuCompact)
@@ -329,6 +332,7 @@ setupGeneral(HWND hDlg, UINT message, UINT wParam, LONG lParam)
 			
 			deskWrap = (SendDlgItemMessage(hDlg, IDC_DESKCYCLE, BM_GETCHECK, 0, 0) == BST_CHECKED) ;
 			hotkeyMenuLoc = (SendDlgItemMessage(hDlg, IDC_HOTKEYMENULOC, BM_GETCHECK, 0, 0) == BST_CHECKED) ;
+			aggressiveRules = (SendDlgItemMessage(hDlg, IDC_AGGRESSIVE, BM_GETCHECK, 0, 0) == BST_CHECKED);
 			winListCompact = (SendDlgItemMessage(hDlg, IDC_COMPACTWLIST, BM_GETCHECK, 0, 0) == BST_CHECKED) ;
 			winMenuCompact = (SendDlgItemMessage(hDlg, IDC_COMPACTWMENU, BM_GETCHECK, 0, 0) == BST_CHECKED) ;
 			ctlMenuCompact = (SendDlgItemMessage(hDlg, IDC_COMPACTCMENU, BM_GETCHECK, 0, 0) == BST_CHECKED) ;
@@ -397,6 +401,7 @@ setupGeneral(HWND hDlg, UINT message, UINT wParam, LONG lParam)
 				 (wPar == IDC_MENUSHOW)    || (wPar == IDC_COMPACTCMENU)  ||
 				 (wPar == IDC_MENUACCESS)  || (wPar == IDC_HOTKEYMENULOC) ||
 				 (wPar == IDC_WLUSETTLLN)  || (wPar == IDC_MENUSTICKY)    ||
+				 (wPar == IDC_AGGRESSIVE)  ||
 				 (wPar == IDC_DESKTOPNAME  && HIWORD(wParam) == EN_CHANGE)))
 		{
 			pageChangeMask |= 0x01 ;
