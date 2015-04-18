@@ -99,7 +99,6 @@
     <ClInclude Include="..\Messages.h" />
     <ClInclude Include="Source\Module\Defines.h" />
     <ClInclude Include="..\VirtuaWin.h" />
-    <ClInclude Include="Source\resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>

@@ -86,11 +86,11 @@ typedef unsigned char  vwUByte ;
 #define vwWTFLAGS_HIDETSK_TOOLWN   0x20000000
 
 typedef struct vwWindowRule {
-    struct vwWindowRule *next;
-    TCHAR               *name[vwWTNAME_COUNT] ;
-    vwUInt               flags ; 
-    vwUByte              desk ;
-    vwUByte              nameLen[vwWTNAME_COUNT] ;
+	struct vwWindowRule *next;
+	TCHAR               *name[vwWTNAME_COUNT] ;
+	vwUInt               flags ; 
+	vwUByte              desk ;
+	vwUByte              nameLen[vwWTNAME_COUNT] ;
 } vwWindowRule ;
 
 /* vwWindow structures for storing information about one window */
@@ -127,49 +127,50 @@ typedef struct vwWindowRule {
 
 /* vwWindowBase - Holds data far a non-managed window */
 typedef struct vwWindowBase { 
-    struct vwWindowBase *next ;
-    struct vwWindowBase *hash ;
-    HWND                 handle ;
-    vwUInt               flags ;
+	struct vwWindowBase *next ;
+	struct vwWindowBase *hash ;
+	HWND                 handle ;
+	vwUInt               flags ;
 } vwWindowBase;
 
 /* vwWindow - Holds data far a managed window, start must be the same as vwWindowBase */
 typedef struct vwWindow { 
-    /* same as vwWindowBase - start */
-    struct vwWindow     *next ;
-    struct vwWindow     *hash ;
-    HWND                 handle ;
-    vwUInt               flags ;
-    /* same as vwWindowBase - end */
-    long                 exStyle;
-    DWORD                processId ;
-    struct vwWindow     *processNext ;
-    struct vwWindow     *linkedNext ;
-    vwUInt               zOrder[vwDESKTOP_SIZE] ;
-    vwUByte              menuId ;
-    vwUByte              desk;
+	/* same as vwWindowBase - start */
+	struct vwWindow     *next ;
+	struct vwWindow     *hash ;
+	HWND                 handle ;
+	vwUInt               flags ;
+	/* same as vwWindowBase - end */
+	long                 exStyle;
+	DWORD                processId ;
+	struct vwWindow     *processNext ;
+	struct vwWindow     *linkedNext ;
+	vwUInt               zOrder[vwDESKTOP_SIZE] ;
+	vwUByte              menuId ;
+	vwUByte              desk;
+	vwUByte              assignedDesk;
 } vwWindow ;
 
 /* Holds data for modules */
 typedef struct {
-    HWND      handle;
-    TCHAR     description[vwMODULENAME_MAX+1];
-    vwUByte   disabled;
+	HWND      handle;
+	TCHAR     description[vwMODULENAME_MAX+1];
+	vwUByte   disabled;
 } vwModule ;
 
 /* Holds disabled modules */
 typedef struct {
-    TCHAR     moduleName[vwMODULENAME_MAX+1];
+	TCHAR     moduleName[vwMODULENAME_MAX+1];
 } vwDisModule ;
 
 /* vwListItem - Structure used by the window list menu */
 typedef struct {
-    TCHAR    *name;
-    HICON     icon; 
-    vwUInt    zOrder ;
-    vwUShort  id;
-    vwUByte   desk;
-    vwUByte   sticky;
+	TCHAR    *name;
+	HICON     icon; 
+	vwUInt    zOrder ;
+	vwUShort  id;
+	vwUByte   desk;
+	vwUByte   sticky;
 } vwListItem ;
 
 /* vwHotkey - Structure to store a hotkey binding */
@@ -182,29 +183,29 @@ typedef struct {
 #define vwHOTKEY_WIN_MOUSE 0x20
 
 typedef struct {
-    ATOM     atom ;
-    vwUByte  key ;
-    vwUByte  modifier ;
-    vwUByte  command ;
-    vwUByte  desk ;
+	ATOM     atom ;
+	vwUByte  key ;
+	vwUByte  modifier ;
+	vwUByte  command ;
+	vwUByte  desk ;
 } vwHotkey ;
 
 #define vwMENU_LABEL_MAX 40
 
 typedef struct vwMenuItem {
-    struct vwMenuItem *next ;
-    HWND               module ;
-    HMENU              submenu ;          
-    vwUShort           position ;
-    vwUShort           message ;
-    vwUShort           id ;
-    TCHAR              label[vwMENU_LABEL_MAX] ;
+	struct vwMenuItem *next ;
+	HWND               module ;
+	HMENU              submenu ;          
+	vwUShort           position ;
+	vwUShort           message ;
+	vwUShort           id ;
+	TCHAR              label[vwMENU_LABEL_MAX] ;
 } vwMenuItem ;
 
 typedef struct {
-    vwUShort position ;
-    vwUShort message ;
-    char     label[vwMENU_LABEL_MAX] ;
+	vwUShort position ;
+	vwUShort message ;
+	char     label[vwMENU_LABEL_MAX] ;
 } vwMenuItemMsg ;
 
 #endif
