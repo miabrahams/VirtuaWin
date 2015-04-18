@@ -23,6 +23,7 @@
 
 
 // Includes
+#define _CRT_SECURE_NO_WARNINGS
 #define vwLOG_VERBOSE
 #include "VirtuaWin.h"
 #include "DiskRoutines.h"
@@ -1071,7 +1072,7 @@ createDeskImage(int deskNo, int createDefault)
     GetFilename(vwFILE_COUNT,1,fname) ;
 	_stprintf_s(fname + _tcslen(fname), 260, _T("desk_%d.bmp"), deskNo);
     if(GetDIBits(bitmapDC,deskImageBitmap,0,deskImageInfo.bmiHeader.biHeight,deskImageData,&deskImageInfo,DIB_RGB_COLORS) &&
-		((_tfopen_s(&fp, fname, _T("wb+"))) != 0))
+		((fp = _tfopen(fname, _T("wb+"))) != 0))
     {
         BITMAPFILEHEADER hdr ;
         hdr.bfType = 0x4d42 ;
@@ -5796,7 +5797,7 @@ VirtuaWinInit(HINSTANCE hInstance, LPSTR cmdLine)
         TCHAR logFname[MAX_PATH] = _T("");
         GetFilename(vwVIRTUAWIN_CFG,1,logFname) ;
         _tcscpy_s(logFname+_tcslen(logFname)-3,260, _T("log")) ;
-		_tfopen_s(&vwLogFile, logFname, _T("w+"));
+		vwLogFile = _tfopen(logFname, _T("w+"));
         vwLogBasic((vwVIRTUAWIN_NAME_VERSION _T("\n"))) ;
     }
     if(useWindowRules)

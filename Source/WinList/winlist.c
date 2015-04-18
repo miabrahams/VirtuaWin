@@ -20,6 +20,7 @@
 //  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, 
 //  USA.
 //
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <windows.h>
 #include <commctrl.h>
@@ -475,7 +476,7 @@ DialogFunc(HWND hwndDlg, UINT msg, WPARAM wParam, LPARAM lParam)
                     MessageBox(hwndDlg, _T("Cannot create a WinList_#.log file, please clean up your user directory."), _T("VirtuaWinList Error"), MB_ICONWARNING);
                 else
                 {
-					_tfopen_s(&wdFp, fname, _T("w+"));
+					wdFp = _tfopen(fname, _T("w+"));
                     EnumWindows(enumWindowsSaveListProc,(LPARAM) wdFp) ;
                     fclose(wdFp) ;
                 }

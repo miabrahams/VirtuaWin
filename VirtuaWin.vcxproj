@@ -98,8 +98,8 @@
     <ClInclude Include="..\DiskRoutines.h" />
     <ClInclude Include="..\Messages.h" />
     <ClInclude Include="Source\Module\Defines.h" />
-    <ClInclude Include="..\Resource.h" />
     <ClInclude Include="..\VirtuaWin.h" />
+    <ClInclude Include="Source\resource.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
@@ -112,13 +112,37 @@
     <ClCompile Include="Source\WinRuleDialog.c" />
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="Source\VirtuaWin.rc" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="vwCommands.def" />
   </ItemGroup>
   <ItemGroup>
     <Manifest Include="Source\VirtuaWin.exe.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Icons\check.ico" />
+    <Image Include="Icons\st_0.ico" />
+    <Image Include="Icons\st_1.ico" />
+    <Image Include="Icons\st_2.ico" />
+    <Image Include="Icons\st_3.ico" />
+    <Image Include="Icons\st_4.ico" />
+    <Image Include="Icons\st_5.ico" />
+    <Image Include="Icons\st_6.ico" />
+    <Image Include="Icons\st_7.ico" />
+    <Image Include="Icons\st_8.ico" />
+    <Image Include="Icons\st_9.ico" />
+    <Image Include="Icons\st_dis_1.ico" />
+    <Image Include="Icons\st_dis_2.ico" />
+    <Image Include="Icons\st_ne_1.ico" />
+    <Image Include="Icons\st_ne_2.ico" />
+    <Image Include="Icons\st_nw_1.ico" />
+    <Image Include="Icons\st_nw_2.ico" />
+    <Image Include="Icons\st_se_1.ico" />
+    <Image Include="Icons\st_se_2.ico" />
+    <Image Include="Icons\st_sw_1.ico" />
+    <Image Include="Icons\st_sw_2.ico" />
+    <Image Include="Icons\virtuawin.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Source\VirtuaWin.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
