@@ -201,7 +201,7 @@ storeDesktopProperties(void)
 {
 	TCHAR buff[64], *ss ;
 	
-	GetDlgItemText(setupGeneralHWnd,IDC_DESKTOPNAME,buff,64) ;
+	GetDlgItemText(setupGeneralHWnd,IDC_DESKTOPNAME,buff,64);
 	if(((desktopName[currentDesk] == NULL) && (buff[0] != '\0')) ||
 	   ((desktopName[currentDesk] != NULL) && _tcscmp(buff,desktopName[currentDesk])))
 	{
@@ -1082,36 +1082,7 @@ setupExpert(HWND hDlg, UINT message, UINT wParam, LONG lParam)
 		}
 		else if(LOWORD((wParam) == IDC_LOGWINDOWS))
 		{   // Log Windows
-			TCHAR cname[vwCLASSNAME_MAX], wname[vwWINDOWNAME_MAX] ;
-			vwWindowBase *wb ;
-			vwWindow *win ;
-			RECT pos ;
-				
-			vwMutexLock();
-			windowListUpdate() ;
-			wb = windowBaseList ;
-			while(wb != NULL)
-			{
-				GetWindowRect(wb->handle,&pos) ;
-				GetClassName(wb->handle,cname,vwCLASSNAME_MAX);
-				if(!GetWindowText(wb->handle,wname,vwWINDOWNAME_MAX))
-					_tcscpy_s(wname,128, vwWTNAME_NONE);
-				if(wb->flags & vwWINFLAGS_MANAGED)
-				{
-					win = (vwWindow *) wb ;
-					vwLogBasic((_T("MNG-WIN: %8x Flg %08x %08x %08x Pos %d %d Proc %d %x Own %x Link %x Desk %d\n        Class \"%s\" Title \"%s\"\n"),
-								(int) wb->handle,(int) wb->flags,(int) GetWindowLong(wb->handle, GWL_STYLE),(int) GetWindowLong(wb->handle, GWL_EXSTYLE),
-								(int) pos.left, (int) pos.top,(int)win->processId,(int)((win->processNext == NULL) ? 0:win->processNext->handle),
-								(int) GetWindow(wb->handle,GW_OWNER),(int)((win->linkedNext == NULL) ? 0:win->linkedNext->handle),(int) win->desk,cname,wname)) ;
-				}
-				else
-					vwLogBasic((_T("%s-WIN: %8x Flg %08x %08x %08x Pos %d %d Own %x\n        Class \"%s\" Title \"%s\"\n"),
-								(wb->flags & vwWINFLAGS_WINDOW) ? "UNM":"NON",
-								(int) wb->handle,(int) wb->flags,(int) GetWindowLong(wb->handle, GWL_STYLE),(int) GetWindowLong(wb->handle, GWL_EXSTYLE),
-								(int) pos.left,(int) pos.top, (int) GetWindow(wb->handle,GW_OWNER), cname, wname)) ;
-				wb = wb->next ;
-			}
-			vwMutexRelease();
+			vwLogWindows(); 
 		}
 		else if(LOWORD(wParam) == IDC_FOCUS       || LOWORD(wParam) == IDC_USEWINRULES ||
 				LOWORD(wParam) == IDC_DISPLAYICON || LOWORD(wParam) == IDC_DEBUGLOGGING ||

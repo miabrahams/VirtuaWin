@@ -38,6 +38,7 @@ extern int screenTop;
 extern int screenBottom;
 extern int deskImageCount;
 
+
 extern vwWindow *windowList;                      // list of managed windows
 extern vwWindowBase *windowBaseList;              // list of all windows
 extern vwWindowRule *windowRuleList;              // list for holding window rules
@@ -55,6 +56,12 @@ extern FILE *vwLogFile ;
 
 #define vwLogEnabled()        (vwLogFile != NULL)
 #define vwLogBasic(a)         (vwLogEnabled() ? vwLogPrint a :0)
+
+#ifdef vwLOG_VERBOSER
+#define vwLogVerboser(a)       vwLogVerbose(a)
+#else
+#define vwLogVerboser(a)
+#endif
 
 #ifdef vwLOG_VERBOSE
 #define vwLogVerbose(a)       (vwLogEnabled() ? vwLogPrint a :0)
@@ -78,6 +85,7 @@ void vwHotkeyUnregister(int unregAll) ;
 void getWorkArea(void) ;
 int  windowListUpdate(void) ;
 void vwWindowRuleReapply(void) ;
+void vwLogWindows(void); 
 int  disableDeskImage(int count) ;
 int  createDeskImage(int deskNo, int createDefault) ;
 void setForegroundWin(HWND theWin, int makeTop) ;
@@ -92,6 +100,7 @@ void storeDesktopProperties(void) ;
 
 /* Prototypes from WinRuleDialog.c */
 void createWindowRuleDialog(HINSTANCE theHinst, HWND theHwndOwner, vwWindowRule *wtype, HWND theWin) ;
+void updateWindowRuleDialog(HINSTANCE theHinst, HWND theHwndOwner, vwWindowRule *wtype, HWND theWin) ;
 
 /* Prototypes from ModuleRoutines.c */
 void vwModulesLoad(void);

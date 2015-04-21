@@ -36,6 +36,7 @@
 #include <shellapi.h>
 #include <prsht.h>
 #include <commctrl.h>
+#include <Psapi.h>
 
 static int deskCount ;
 static HWND initWin ;
@@ -182,70 +183,82 @@ windowRuleDialogInitItem(HWND hDlg)
 	EnableWindow(GetDlgItem(hDlg,IDC_WTYPE_DEL),FALSE) ;
 }
 
+
+static void
+windowRuleFillInitial(HWND hDlg) {
+	if (initWin != NULL)
+	{
+		TCHAR buff[MAX_PATH];
+		DWORD procId;
+		HANDLE procHdl;
+		DWORD procSize = MAX_PATH;
+		typedef DWORD(WINAPI *vwGETMODULEFILENAMEEX)(HANDLE, HMODULE, LPTSTR, DWORD);
+		extern vwGETMODULEFILENAMEEX vwGetModuleFileNameEx;
+
+		buff[0] = 0;
+		GetClassName(initWin, buff, MAX_PATH);
+		SetDlgItemText(hDlg, wtypeNameEntry[0], buff);
+		buff[0] = 0;
+		GetWindowText(initWin, buff, MAX_PATH);
+		if (buff[0] == 0)
+			_tcscpy_s(buff, 260, vwWTNAME_NONE);
+		SetDlgItemText(hDlg, wtypeNameEntry[1], buff);
+		buff[0] = 0;
+		if ((vwGetModuleFileNameEx != NULL) &&
+			(GetWindowThreadProcessId(initWin, &procId) != 0) && (procId != 0) &&
+			((procHdl = OpenProcess(PROCESS_QUERY_INFORMATION | PROCESS_VM_READ, FALSE, procId)) != NULL))
+		{
+			// vwGetModuleFileNameEx(procHdl, NULL, buff, MAX_PATH);
+			QueryFullProcessImageName(procHdl, 0, buff, &procSize);
+			CloseHandle(procHdl);
+		}
+		SetDlgItemText(hDlg, wtypeNameEntry[2], buff);
+		initWin = NULL;
+	}
+}
+
+
 static void
 windowRuleDialogInit(HWND hDlg, int firstTime)
 {
-	TCHAR buff[MAX_PATH] ;
-	HANDLE procHdl ;
-	DWORD procId ;
-	int ii ;
-	
-	if(firstTime)
+	TCHAR buff[MAX_PATH];
+	int ii;
+
+	if (firstTime)
 	{
-		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG) _T("Default - configured in main Setup"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG) _T("Ignore the event"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG) _T("Move window to current desktop"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG) _T("Show window on current desktop"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG) _T("Change to window's desktop"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_ADDSTRING, 0, (LONG) _T("Hide using standard method"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_ADDSTRING, 0, (LONG) _T("Hide by move window"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_ADDSTRING, 0, (LONG) _T("Hide by minimizing window"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_ADDSTRING, 0, (LONG) _T("Hide using standard method"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_ADDSTRING, 0, (LONG) _T("Show - Keep taskbar button visible"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_ADDSTRING, 0, (LONG) _T("Hide by using toolwin flag"));
-		SendDlgItemMessage(hDlg, IDC_WTYPE_ENABLE,BM_SETCHECK,1,0);
-		SendDlgItemMessage(hDlg, IDC_WTYPE_VMANAGE,BM_SETCHECK,1,0);
-		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_SETCURSEL, 0, 0) ;
-		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_SETCURSEL, 0, 0) ;
-		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_SETCURSEL, 0, 0) ;
-		EnableWindow(GetDlgItem(hDlg,IDC_WTYPE_AMDSK),FALSE) ;
-		EnableWindow(GetDlgItem(hDlg,IDC_WTYPE_AMIMM),FALSE) ;
-		EnableWindow(GetDlgItem(hDlg,IDC_WTYPE_APPLY),FALSE) ;
+		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG)_T("Default - configured in main Setup"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG)_T("Ignore the event"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG)_T("Move window to current desktop"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG)_T("Show window on current desktop"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_ADDSTRING, 0, (LONG)_T("Change to window's desktop"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_ADDSTRING, 0, (LONG)_T("Hide using standard method"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_ADDSTRING, 0, (LONG)_T("Hide by move window"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_ADDSTRING, 0, (LONG)_T("Hide by minimizing window"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_ADDSTRING, 0, (LONG)_T("Hide using standard method"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_ADDSTRING, 0, (LONG)_T("Show - Keep taskbar button visible"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_ADDSTRING, 0, (LONG)_T("Hide by using toolwin flag"));
+		SendDlgItemMessage(hDlg, IDC_WTYPE_ENABLE, BM_SETCHECK, 1, 0);
+		SendDlgItemMessage(hDlg, IDC_WTYPE_VMANAGE, BM_SETCHECK, 1, 0);
+		SendDlgItemMessage(hDlg, IDC_WTYPE_HWACT, CB_SETCURSEL, 0, 0);
+		SendDlgItemMessage(hDlg, IDC_WTYPE_WHIDE, CB_SETCURSEL, 0, 0);
+		SendDlgItemMessage(hDlg, IDC_WTYPE_THIDE, CB_SETCURSEL, 0, 0);
+		EnableWindow(GetDlgItem(hDlg, IDC_WTYPE_AMDSK), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_WTYPE_AMIMM), FALSE);
+		EnableWindow(GetDlgItem(hDlg, IDC_WTYPE_APPLY), FALSE);
 	}
-	SendDlgItemMessage(hDlg,IDC_WTYPE_AMDSK,CB_RESETCONTENT,0, 0);
-	for(ii=1 ; ii<=deskCount ; ii++)
+	SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_RESETCONTENT, 0, 0);
+	for (ii = 1; ii <= deskCount; ii++)
 	{
 		_stprintf_s(buff, 260, _T("%d"), ii);
-		SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_ADDSTRING, 0, (LONG) buff) ;
+		SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_ADDSTRING, 0, (LONG)buff);
 	}
-	SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_SETCURSEL, 0, 0) ;
-	windowRuleDialogInitList(hDlg) ;
-	windowRuleDialogInitItem(hDlg) ;
-	if(initWin != NULL)
-	{
-		typedef DWORD (WINAPI *vwGETMODULEFILENAMEEX)(HANDLE,HMODULE,LPTSTR,DWORD) ;
-		extern vwGETMODULEFILENAMEEX vwGetModuleFileNameEx ;
-		
-		buff[0] = 0 ;
-		GetClassName(initWin,buff,MAX_PATH);
-		SetDlgItemText(hDlg,wtypeNameEntry[0],buff) ;
-		buff[0] = 0 ;
-		GetWindowText(initWin,buff,MAX_PATH);
-		if(buff[0] == 0)
-			_tcscpy_s(buff, 260,vwWTNAME_NONE);
-		SetDlgItemText(hDlg,wtypeNameEntry[1],buff) ;
-		buff[0] = 0 ;
-		if((vwGetModuleFileNameEx != NULL) &&
-		   (GetWindowThreadProcessId(initWin,&procId) != 0) && (procId != 0) && 
-		   ((procHdl=OpenProcess(PROCESS_QUERY_INFORMATION|PROCESS_VM_READ,FALSE,procId)) != NULL))
-		{
-			vwGetModuleFileNameEx(procHdl,NULL,buff,MAX_PATH) ;
-			CloseHandle(procHdl) ;
-		}
-		SetDlgItemText(hDlg,wtypeNameEntry[2],buff) ;
-		initWin = NULL ;
-	}
+	SendDlgItemMessage(hDlg, IDC_WTYPE_AMDSK, CB_SETCURSEL, 0, 0);
+	windowRuleDialogInitList(hDlg);
+	windowRuleDialogInitItem(hDlg);
+	windowRuleFillInitial(hDlg);
 }
+
+
 
 static void
 windowRuleDialogSetItem(HWND hDlg)
@@ -596,6 +609,10 @@ windowRuleDialogFunc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 			break ;
 		}
 		break ;
+
+	case WM_UPDATE_DIALOG:
+		windowRuleFillInitial(hDlg);
+		break; 
 		
 	case WM_CLOSE:
 		/* load original config back in */ 
@@ -618,4 +635,16 @@ createWindowRuleDialog(HINSTANCE theHinst, HWND theHwndOwner, vwWindowRule *wtyp
 	DialogBox(theHinst,MAKEINTRESOURCE(IDD_WINDOWRULEDIALOG),theHwndOwner,(DLGPROC) windowRuleDialogFunc) ;
 	dialogOpen = FALSE ;
 	dialogHWnd = NULL ;
+}
+
+
+void
+updateWindowRuleDialog(HINSTANCE theHinst, HWND theHwndOwner, vwWindowRule *wtype, HWND theWin) {
+	if ((deskCount = nDesks) < currentDesk)
+		deskCount = currentDesk;
+	winRuleCur = wtype;
+	initWin = theWin;
+	if (dialogOpen == TRUE)
+		SendMessage(dialogHWnd, WM_UPDATE_DIALOG, (WPARAM)wtype, 0);
+
 }

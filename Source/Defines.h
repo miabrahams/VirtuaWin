@@ -149,6 +149,7 @@ typedef struct vwWindow {
 	vwUByte              menuId ;
 	vwUByte              desk;
 	vwUByte              assignedDesk;
+	vwWindowRule		*wt; 
 } vwWindow ;
 
 /* Holds data for modules */

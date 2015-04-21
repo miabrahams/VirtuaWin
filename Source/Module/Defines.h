@@ -207,4 +207,5 @@ typedef struct {
     char     label[vwMENU_LABEL_MAX] ;
 } vwMenuItemMsg ;
 
+
 #endif

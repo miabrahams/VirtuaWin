@@ -290,8 +290,12 @@ loadWindowConfig(void)
 		win = (vwWindow *) windowBaseList ;
 		while(win != NULL)
 		{
-			if(win->flags & vwWINFLAGS_WINDOW)
-				win->zOrder[0] = 0 ;
+			if (win->flags & vwWINFLAGS_WINDOW) {
+				win->zOrder[0] = 0;
+				win->wt = NULL;
+			}
+				
+			
 			win = win->next ;
 		}
 	}
