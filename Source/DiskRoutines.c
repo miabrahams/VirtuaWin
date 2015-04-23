@@ -286,16 +286,14 @@ loadWindowConfig(void)
 			} while(--ii >= 0) ;
 			free(wt) ;
 		}
-		/* set all window zOrder[0] (used to store the vwWindowRules) to 0 */
+
+		/* set existing vwWindowRules to NULL */
 		win = (vwWindow *) windowBaseList ;
 		while(win != NULL)
 		{
 			if (win->flags & vwWINFLAGS_WINDOW) {
-				win->zOrder[0] = 0;
 				win->wt = NULL;
 			}
-				
-			
 			win = win->next ;
 		}
 	}

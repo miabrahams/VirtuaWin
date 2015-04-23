@@ -41,15 +41,15 @@
 static int deskCount ;
 static HWND initWin ;
 static vwWindowRule *winRuleCur ;
+static char wtypeNameLabel[vwWTNAME_COUNT] = "CWP";
 
 static void
 windowRuleDialogInitList(HWND hDlg)
 {
 	static int ts[3] = { 16, 20, 120 } ;
-	static char wtypeNameLabel[vwWTNAME_COUNT] = "CWP" ;
 	vwWindowRule *wt ;
 	TCHAR buff[388], *ss;
-	int ii, jj, kk, winRuleCurIdx=0 ;
+	int ii, winRuleCurIdx=0 ;
 	
 	SendDlgItemMessage(hDlg,IDC_WTYPE_LIST,LB_RESETCONTENT,0, 0);
 	SendDlgItemMessage(hDlg,IDC_WTYPE_LIST,LB_SETTABSTOPS,(WPARAM) 3,(LPARAM) ts);
@@ -60,37 +60,9 @@ windowRuleDialogInitList(HWND hDlg)
 		if(((wt->flags & vwWTFLAGS_MOVE) == 0) || (wt->desk <= deskCount))
 		{
 			ii++ ;
-			ss = buff ;
-			ss += _stprintf_s(ss, 388, _T("%d"),ii) ;
-			for(jj=0 ; jj<vwWTNAME_COUNT ; jj++)
-			{
-				if(wt->name[jj] != NULL)
-				{
-					*ss++ = '\t' ;
-					*ss++ = wtypeNameLabel[jj] ;
-					*ss++ = 'N' ;
-					*ss++ = ':' ;
-					if(wt->flags & (1 << (jj << 1)))
-						*ss++ = '*' ;
-					kk = _tcslen(wt->name[jj]) ;
-					if(kk > 120)
-					{
-						_tcsncpy_s(ss,388, wt->name[jj],120) ;
-						ss += 120 ;
-						*ss++ = '.' ;
-						*ss++ = '.' ;
-						*ss++ = '.' ;
-					}
-					else
-					{
-						_tcsncpy_s(ss,388, wt->name[jj],kk) ;
-						ss += kk ;
-					}
-					if(wt->flags & (2 << (jj << 1)))
-						*ss++ = '*' ;
-				}
-			}
-			*ss = '\0' ;
+			ss = buff;
+			ss += _stprintf_s(ss, 388, _T("%d"), ii);
+			windowRuleFormatDescription(ss, wt);
 			SendDlgItemMessage(hDlg,IDC_WTYPE_LIST,LB_ADDSTRING,0,(LONG) buff);
 			if(wt == winRuleCur)
 				winRuleCurIdx = ii ;
@@ -102,6 +74,44 @@ windowRuleDialogInitList(HWND hDlg)
 	else
 		winRuleCur = NULL ;
 }
+
+void 
+windowRuleFormatDescription(TCHAR* ss, vwWindowRule *wt)
+{
+	int jj, kk; 
+
+	for (jj = 0; jj<vwWTNAME_COUNT; jj++)
+	{
+		if (wt->name[jj] != NULL)
+		{
+			*ss++ = '\t';
+			*ss++ = wtypeNameLabel[jj];
+			*ss++ = 'N';
+			*ss++ = ':';
+			if (wt->flags & (1 << (jj << 1)))
+				*ss++ = '*';
+			kk = _tcslen(wt->name[jj]);
+			if (kk > 120)
+			{
+				_tcsncpy_s(ss, 388, wt->name[jj], 120);
+				ss += 120;
+				*ss++ = '.';
+				*ss++ = '.';
+				*ss++ = '.';
+			}
+			else
+			{
+				_tcsncpy_s(ss, 388, wt->name[jj], kk);
+				ss += kk;
+			}
+			if (wt->flags & (2 << (jj << 1)))
+				*ss++ = '*';
+		}
+	}
+	*ss = '\0';
+}
+
+
 
 static int wtypeNameEntry[vwWTNAME_COUNT] = { IDC_WTYPE_CNAME, IDC_WTYPE_WNAME, IDC_WTYPE_PNAME } ;
 static void
@@ -371,6 +381,17 @@ windowRuleDialogMoveDown(HWND hDlg)
 	windowRuleDialogInitList(hDlg) ;
 }
 
+
+// 
+
+/************************************************
+* Add or modify rules in the window rule dialog
+* add can be one of the following values:
+* -1 - modify existing rule, do not refresh 
+*  0 - modify current rule, refresh
+*  1 - add new rule, refresh
+*  - Window will be shown on the current desktop.
+*/
 static void
 windowRuleDialogAddMod(HWND hDlg, int add)
 {
@@ -379,7 +400,7 @@ windowRuleDialogAddMod(HWND hDlg, int add)
 	TCHAR buff[1024], *ss ;
 	vwUInt flags ;
 	
-	if(add)
+	if(add == 1)
 	{
 		if((wt = calloc(1,sizeof(vwWindowRule))) == NULL)
 			mallocErr = 1 ;
@@ -477,8 +498,11 @@ windowRuleDialogAddMod(HWND hDlg, int add)
 	}
 	if(mallocErr)
 		MessageBox(hWnd,_T("System resources are low, failed to create new window rule."),vwVIRTUAWIN_NAME _T(" Error"), MB_ICONERROR);
-	windowRuleDialogInitList(hDlg) ;
-	windowRuleDialogInitItem(hDlg) ;
+	if (add != -1) {
+		windowRuleDialogInitList(hDlg);
+		windowRuleDialogInitItem(hDlg);
+	}
+	
 }
 
 static void
@@ -532,6 +556,14 @@ windowRuleDialogFunc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 		{
 		case IDC_WTYPE_LIST:
 			if(HIWORD(wParam) == LBN_SELCHANGE)
+				// To add automatic saving will require a small refactor. 
+				// We need to start saving the currently selected item globally, 
+				// and then applying operations to that item, instead of relying
+				// on the dialog box to keep track of the item, since before we see the 
+				// switch message it forgets the item without saving. 
+				//if (winRuleCur != NULL) 
+				//	windowRuleDialogAddMod(hDlg, -1);
+
 				windowRuleDialogSetItem(hDlg) ;
 			break ;
 			
@@ -548,7 +580,7 @@ windowRuleDialogFunc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 			break ;
 		
 		case IDC_WTYPE_MOD:
-			windowRuleDialogAddMod(hDlg,0) ;
+			windowRuleDialogAddMod(hDlg, 0);
 			break ;
 		
 		case IDC_WTYPE_DEL:
@@ -587,8 +619,8 @@ windowRuleDialogFunc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 
 		case IDC_WTYPE_OK:
 			if(IsWindowEnabled(GetDlgItem(hDlg,IDC_WTYPE_APPLY)))
-				saveWindowConfig() ; 
-			vwWindowRuleReapply() ;
+				saveWindowConfig(); 
+			vwWindowRuleReapply();
 			EndDialog(hDlg,0);
 			return TRUE;
 			
@@ -599,9 +631,9 @@ windowRuleDialogFunc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 			return TRUE;
 		
 		case IDC_WTYPE_APPLY:
-			saveWindowConfig() ; 
-			vwWindowRuleReapply() ;
-			EnableWindow(GetDlgItem(hDlg,IDC_WTYPE_APPLY),FALSE) ;
+			saveWindowConfig();
+			vwWindowRuleReapply();
+			EnableWindow(GetDlgItem(hDlg,IDC_WTYPE_APPLY),FALSE);
 			break ;
 			
 		case IDC_WTYPE_HELP:
@@ -612,7 +644,7 @@ windowRuleDialogFunc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lParam)
 
 	case WM_UPDATE_DIALOG:
 		windowRuleFillInitial(hDlg);
-		break; 
+		break;
 		
 	case WM_CLOSE:
 		/* load original config back in */ 

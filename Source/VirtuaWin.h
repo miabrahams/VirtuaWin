@@ -101,6 +101,7 @@ void storeDesktopProperties(void) ;
 /* Prototypes from WinRuleDialog.c */
 void createWindowRuleDialog(HINSTANCE theHinst, HWND theHwndOwner, vwWindowRule *wtype, HWND theWin) ;
 void updateWindowRuleDialog(HINSTANCE theHinst, HWND theHwndOwner, vwWindowRule *wtype, HWND theWin) ;
+void windowRuleFormatDescription(TCHAR* ss, vwWindowRule *wt); 
 
 /* Prototypes from ModuleRoutines.c */
 void vwModulesLoad(void);
