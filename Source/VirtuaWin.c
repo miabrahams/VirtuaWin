@@ -4641,6 +4641,8 @@ popupWinListMenu(HWND aHWnd, int wlFlags)
 		return;
 	}
 	fgWin = GetForegroundWindow();
+
+	//Generate list of selectable windows
 	if ((wlcFlags = winListCreateItemList(wlFlags, items, &itemCount)) == 0)
 		return;
 	if ((wlFlags & 0x010) && hotkeyMenuLoc)
@@ -4678,6 +4680,8 @@ popupWinListMenu(HWND aHWnd, int wlFlags)
 		}
 		else
 			ii = wlcFlags;
+
+		//Attempt to create the menu
 		if ((hpopup = winListCreateMenu(ii, itemCount, items)) == NULL)
 			break;
 		retItem = TrackPopupMenu(hpopup, TPM_RETURNCMD | TPM_LEFTBUTTON, // Return menu code
